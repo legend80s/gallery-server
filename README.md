@@ -2,9 +2,7 @@
 
 > Powerful yet simple Node.js image server using react-image-gallery
 
-### 🏠 [Homepage](https://github.com/legend80s/gallery-server)
-
-### ✨ [Demo](https://github.com/legend80s/gallery-server)
+![gallery-server-demo](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/gallery-server-demo.png)
 
 ## Install
 
