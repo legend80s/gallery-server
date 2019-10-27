@@ -6,7 +6,7 @@ const isImage = require('is-image');
 
 const app = new Koa();
 
-const cmdExample = '`npm run start -- --folder=/Users/xiaoming/Downloads/images`';
+const cmdExample = '`npm start -- --folder=/Users/xiaoming/Downloads/images`';
 const imageFolder = getImageFolderFromCli();
 
 app.use(serve(imageFolder));
