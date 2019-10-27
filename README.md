@@ -4,7 +4,7 @@
 
 ![gallery-server-demo](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page.png)
 
-### **<p align="center">Beautiful Local Image Viewer</p>**
+#### **<p align="center">Beautiful Local Image Viewer</p>**
 
 ## Install
 
