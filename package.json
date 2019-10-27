@@ -1,10 +1,12 @@
 {
   "name": "gallery-server",
   "version": "0.1.0",
+  "description": "Powerful yet simple Node.js image server using react-image-gallery",
   "private": true,
   "dependencies": {
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "react-image-gallery": "^0.9.1",
     "react-scripts": "3.2.0"
   },
   "scripts": {

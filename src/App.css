@@ -1,20 +1,33 @@
 .App {
+  height: 100vh;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
+.Gallery-wrapper {
+  margin: 0 18%;
+  margin-top: 1%;
 }
 
-.App-header {
+.App-logo {
+  height: 4vmin;
+}
+
+.App-footer {
   background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 0.5vmin);
   color: white;
+
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.tips {
+  margin: 0.2vh 0;
 }
 
 .App-link {
