@@ -15,16 +15,16 @@ npm install gallery-server -g
 ## Usage
 
 ```sh
-gallery-server --folder=/path/to/images
+gallery-server --folder /path/to/images
 
 # or
-npx gallery-server --folder=/path/to/images
+npx gallery-server --folder /path/to/images
 ```
 
 ## Develop
 
 ```sh
-npm run start -- --folder=/path/to/images
+npm run start -- --folder /path/to/images
 ```
 
 ## Run tests

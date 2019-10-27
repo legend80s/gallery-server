@@ -6,7 +6,7 @@ const isImage = require('is-image');
 
 const app = new Koa();
 
-const cmdExample = '`npx gallery-server --folder=/path/to/images`';
+const cmdExample = '`npx gallery-server --folder /path/to/images`';
 const imageFolder = getImageFolderFromCli();
 
 app.use(serve(imageFolder));
@@ -35,7 +35,7 @@ app.use(async ctx => {
     return;
   }
 
-  ctx.body = 'TODO: github address';
+  ctx.body = 'https://github.com/legend80s/gallery-server';
 });
 
 const PORT = 7001;
@@ -82,21 +82,13 @@ function findAllFiles(folder) {
 }
 
 function getImageFolderFromCli() {
-  let folder = '';
+  // console.log('process.argv.slice(2):', process.argv.slice(2));
 
-  // console.log('process.argv:', process.argv);
+  const argString = process.argv.slice(2).join(' ')
+  // match `--folder /path/to/images` or `--folder=/path/to/images`
+  const matches = argString.match(/--folder\s(\S+)/) || argString.match(/--folder=(\S+)/);
 
-  process.argv.slice(2).some((arg) => {
-    const matches = arg.match(/--folder=(\S+)/);
-
-    if (matches) {
-      folder = matches[1];
-
-      return true;
-    }
-
-    return false;
-  });
+  const folder = matches && matches[1] || '';
 
   if (!folder) {
     throw new TypeError('folder required. Right example: ' + cmdExample);

@@ -16,7 +16,7 @@
     "git-commit-msg-linter": "^2.3.8"
   },
   "scripts": {
-    "postinstall": "cd client && npm run build",
+    "postinstall": "echo '\\x1B[32m[gallery-server]\\x1B[0m npm run postinstall: cd client && npm run build' && cd client && npm run build",
     "start": "node server/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
