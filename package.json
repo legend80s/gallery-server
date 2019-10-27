@@ -31,6 +31,14 @@
   "bin": {
     "gallery-server": "server/app.js"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "legend80s",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/legend80s/gallery-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/legend80s/gallery-server/issues"
+  },
+  "homepage": "https://github.com/legend80s/gallery-server#readme"
 }
