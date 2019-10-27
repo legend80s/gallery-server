@@ -4,7 +4,7 @@
 
 ![gallery-server-demo](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page.png)
 
-Beautiful local image viewer.
+<p style="text-align:center; color:blue;">Beautiful local image viewer</p>
 
 ## Install
 
@@ -12,7 +12,7 @@ Beautiful local image viewer.
 npm install gallery-server -g
 ```
 
-## Usage
+## Use
 
 1. Serve the images.
 
