@@ -1,8 +1,10 @@
 # Welcome to gallery-server 👋
 
-> Powerful yet simple Node.js image server using react-image-gallery
+> Powerful yet simple Node.js image viewer using react-image-gallery.
 
 ![gallery-server-demo](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/gallery-server-demo.png)
+
+Beautiful local image viewer.
 
 ## Install
 

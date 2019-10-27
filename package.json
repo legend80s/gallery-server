@@ -1,7 +1,14 @@
 {
   "name": "gallery-server",
   "version": "1.0.1",
-  "description": "Powerful yet simple Node.js image server using react-image-gallery",
+  "description": "Powerful yet simple Node.js local image viewer using react-image-gallery",
+  "keywords": [
+    "local",
+    "image",
+    "viewer",
+    "gallery",
+    "react-image-gallery"
+  ],
   "main": "server/app.js",
   "dependencies": {
     "react": "^16.11.0",
