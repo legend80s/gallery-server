@@ -2,7 +2,7 @@
 
 > Powerful yet simple Node.js local image viewer using react-image-gallery.
 
-![gallery-server-demo](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/gallery-server-demo.png)
+![gallery-server-demo](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page.png)
 
 Beautiful local image viewer.
 
@@ -14,12 +14,19 @@ npm install gallery-server -g
 
 ## Usage
 
-```sh
-gallery-server --folder /path/to/images
+1. Serve the images.
 
-# or
-npx gallery-server --folder /path/to/images
-```
+   ```sh
+   gallery-server --folder /path/to/images
+
+   # or
+   npx gallery-server --folder /path/to/images
+
+   # no footer
+   npx gallery-server --folder /path/to/images --view-footer=false
+   ```
+
+2. Enjoy：open <http://localhost:6834/> in your favorite browser.
 
 ## Develop
 

@@ -30,19 +30,36 @@ app.use(async (ctx, next) => {
 });
 
 app.use(async ctx => {
-  if (ctx.method === 'GET' && ctx.path === '/api/images') {
-    ctx.set('Access-Control-Allow-Origin', '*')
-    ctx.body = getImageSrcs(imageFolder);
+  if (ctx.method === 'GET') {
+    if (ctx.path === '/api/images') {
+      return sendImages(ctx);
+    }
 
-    return;
+    if (ctx.path === '/api/view') {
+      return sendViewInfo(ctx);
+    }
   }
 
-  ctx.body = 'https://github.com/legend80s/gallery-server';
+  ctx.redirect('https://github.com/legend80s/gallery-server');
 });
 
-const PORT = 7001;
+function sendImages(ctx) {
+  // ctx.set('Access-Control-Allow-Origin', '*');
+  ctx.body = getImageSrcs(imageFolder);
+}
 
-app.listen(PORT, () => {
+function sendViewInfo(ctx) {
+  // ctx.set('Access-Control-Allow-Origin', '*');
+  ctx.body = {
+    showFooter: extractArg('view-footer', 'true') === 'true',
+  };
+}
+
+/** unique port to avoid conflicts */
+const DEFAULT_PORT = 6834;
+const port = DEFAULT_PORT;
+
+app.listen(port, () => {
   const YELLOW = '\x1b[1;33m';
   const GREEN = '\x1b[0;32m';
   const UNDERLINED = '\x1b[4m';
@@ -50,7 +67,7 @@ app.listen(PORT, () => {
 
   console.log(
     `${YELLOW}[gallery-server]${EOS}`,
-    `open ${GREEN}${UNDERLINED}http://localhost:${PORT}/${EOS}`,
+    `open ${GREEN}${UNDERLINED}http://localhost:${port}/${EOS}`,
     'to enjoy your local image gallery served from',
     `${GREEN}${UNDERLINED}${imageFolder}${EOS}`,
   );
@@ -60,7 +77,7 @@ function getImageSrcs(folder) {
   return findAllFiles(folder)
     .map(filePath => path.relative(folder, filePath))
     .filter(filename => isImage(filename))
-    .map(filename => `http://localhost:${PORT}/${filename.replace(/ /g, '%20')}`);
+    .map(filename => `http://localhost:${port}/${filename.replace(/ /g, '%20')}`);
 }
 
 /**
@@ -83,14 +100,20 @@ function findAllFiles(folder) {
   }, []);
 }
 
-function getImageFolderFromCli() {
+function extractArg(arg, defaultVal = '') {
   // console.log('process.argv.slice(2):', process.argv.slice(2));
 
-  const argString = process.argv.slice(2).join(' ')
+  const argString = process.argv.slice(2).join(' ');
+  // console.log('argString:', argString);
   // match `--folder /path/to/images` or `--folder=/path/to/images`
-  const matches = argString.match(/--folder\s(\S+)/) || argString.match(/--folder=(\S+)/);
+  const matches = argString.match(new RegExp(`--${arg}\\s(\\S+)`)) ||
+    argString.match(new RegExp(`--${arg}=(\\S+)`));
 
-  const folder = matches && matches[1] || '';
+  return matches && matches[1] || defaultVal;
+}
+
+function getImageFolderFromCli() {
+  const folder = extractArg('folder');
 
   if (!folder) {
     throw new TypeError('folder required. Right example: ' + cmdExample);

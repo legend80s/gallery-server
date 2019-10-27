@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ImageGallery from 'react-image-gallery';
 import './Gallery.css';
+import { HOST } from '../constants';
 
 export default function Gallery() {
   const [showNav, setShowNav] = useState(true);
@@ -10,21 +11,7 @@ export default function Gallery() {
   const galleryRef = useRef(null);
 
   useEffect(() => {
-    async function fetchImages() {
-      let srcs;
-
-      try {
-        srcs = await window.fetch('http://localhost:7001/api/images')
-          .then(resp => resp.json())
-
-      } catch (error) {
-        return console.error('fetchImages', error)
-      }
-
-      srcs && setImages(srcs.map(src => ({ original: src, thumbnail: src })));
-    }
-
-    fetchImages();
+    fetchImages(setImages);
   }, [])
 
   // let isFullscreen = false;
@@ -83,3 +70,16 @@ function ismimicDbClick(key) {
 }
 
 ismimicDbClick.prevClickTimestamps = {};
+
+async function fetchImages(setImages) {
+  let srcs;
+
+  try {
+    srcs = await window.fetch(`${HOST}/api/images`)
+      .then(resp => resp.json());
+  } catch (error) {
+    return console.error('fetchImages', error);
+  }
+
+  srcs && setImages(srcs.map(src => ({ original: src, thumbnail: src })));
+}

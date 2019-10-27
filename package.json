@@ -24,6 +24,7 @@
   },
   "scripts": {
     "postinstall": "echo '\\x1B[32m[gallery-server]\\x1B[0m npm run postinstall: cd client && npm run build' && cd client && npm run build",
+    "prestart": "npm run postinstall",
     "start": "node server/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
