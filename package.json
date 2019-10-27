@@ -21,6 +21,9 @@
     "start": "node server/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "gallery-server": "server/app.js"
+  },
   "author": "",
   "license": "ISC"
 }

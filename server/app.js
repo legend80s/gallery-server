@@ -62,8 +62,9 @@ function getImageSrcs(folder) {
 }
 
 /**
- * 递归找出文件夹项目所有文件
- * @param {string} folder 绝对路径
+ * Find all the files in the target folder recursively.
+ * @param {string} folder directory
+ * @returns {string[]} file paths
  */
 function findAllFiles(folder) {
   return fs.readdirSync(folder).reduce((acc, cur) => {
