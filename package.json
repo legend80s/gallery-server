@@ -1,6 +1,6 @@
 {
   "name": "gallery-server",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "Powerful yet simple Node.js local image viewer on your PC or mobile using react-image-gallery",
   "keywords": [
     "pc",
