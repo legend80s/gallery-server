@@ -6,6 +6,8 @@ const path = require('path');
 const fs = require('fs');
 const isImage = require('is-image');
 const address = require('address');
+const boxen = require('boxen');
+
 const packageJson = require('../package.json');
 const { DEFAULT_PORT } = require('../lib/constants');
 
@@ -22,11 +24,12 @@ const EOS = '\x1b[0m';
 const ip = address.ip();
 const REPO = 'https://github.com/legend80s/gallery-server';
 
-console.info(`${BOLD}${ITALIC}
-  gallery-server@${packageJson.version}
-  github: ${REPO}
-  ${EOS}
-`);
+console.info(
+  boxen(
+    `${BOLD}${ITALIC}gallery-server@${packageJson.version}\ngithub: ${REPO}${EOS}`,
+    { margin: 1, padding: { top: 1, right: 1, bottom: 1, left: 1 }, },
+  ),
+);
 
 const cmdExample = '`npx gallery-server --folder /path/to/images`';
 const imageFolder = getImageFolderFromCli();

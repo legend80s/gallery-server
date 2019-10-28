@@ -15,6 +15,7 @@
   "main": "server/app.js",
   "dependencies": {
     "address": "^1.1.2",
+    "boxen": "^4.1.0",
     "is-image": "^3.0.0",
     "koa": "^2.10.0",
     "koa-static": "^5.0.0",
