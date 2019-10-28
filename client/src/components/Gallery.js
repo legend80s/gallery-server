@@ -11,7 +11,7 @@ export default function Gallery() {
   const galleryRef = useRef(null);
 
   useEffect(() => {
-    fetchImages(setImages);
+    collect(setImages);
   }, [])
 
   // let isFullscreen = false;
@@ -54,12 +54,13 @@ export default function Gallery() {
 }
 
 function ismimicDbClick(key) {
-  /** 两次点击间隔时间。单位 ms */
   const now = Date.now();
-
   const prevClickTimestamp = ismimicDbClick.prevClickTimestamps[key] || 0;
+
+  /** time gap in milliseconds between two clicks */
   const gap = now - prevClickTimestamp;
-  console.log({ now, prevClickTimestamp, gap });
+
+  // console.log({ now, prevClickTimestamp, gap });
 
   const isdbClick = gap >= 100 && gap <= 500;
 
@@ -71,15 +72,19 @@ function ismimicDbClick(key) {
 
 ismimicDbClick.prevClickTimestamps = {};
 
-async function fetchImages(setImages) {
-  let srcs;
-
+/**
+ * Collect images from API.
+ *
+ * @param {(images: GalleryImage[]) => void} setImages
+ * @returns {Promise<void>}
+ */
+async function collect(setImages) {
   try {
-    srcs = await window.fetch(`${HOST}/api/images`)
-      .then(resp => resp.json());
-  } catch (error) {
-    return console.error('fetchImages', error);
-  }
+    const resp = await window.fetch(`${HOST}/api/images`);
+    const srcs = await resp.json();
 
-  srcs && setImages(srcs.map(src => ({ original: src, thumbnail: src })));
+    return setImages(srcs.map(src => ({ original: src, thumbnail: src })));
+  } catch (error) {
+    console.error('collect', error);
+  }
 }
