@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ImageGallery from 'react-image-gallery';
 import './Gallery.css';
-import { HOST } from '../../../lib/constants';
 
 export default function Gallery() {
   const [showNav, setShowNav] = useState(true);
@@ -80,7 +79,7 @@ ismimicDbClick.prevClickTimestamps = {};
  */
 async function collect(setImages) {
   try {
-    const resp = await window.fetch(`${HOST}/api/images`);
+    const resp = await window.fetch('/api/images');
     const srcs = await resp.json();
 
     return setImages(srcs.map(src => ({ original: src, thumbnail: src })));

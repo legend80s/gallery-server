@@ -61,6 +61,7 @@ Feel free to check [issues page](https://github.com/legend80s/gallery-server/iss
 - [ ] ipconfig. mimic create-react-app
 - [ ] Electron App
 - [ ] -v -h
+- [x] View on mobile.
 
 ## Show your support
 

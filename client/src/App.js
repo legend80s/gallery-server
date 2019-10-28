@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import Gallery from './components/Gallery'
-import { HOST } from '../../lib/constants';
 
 function App() {
   const [showFooter, setShowFooter] = useState(false);
@@ -42,7 +41,7 @@ export default App;
  */
 async function setFooterStatus(set) {
   try {
-    const resp = await window.fetch(`${HOST}/api/view`)
+    const resp = await window.fetch('/api/view')
     const viewInfo = await resp.json();
 
     typeof viewInfo.showFooter === 'boolean' && set(viewInfo.showFooter);
