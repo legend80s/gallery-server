@@ -11,8 +11,10 @@ const app = new Koa();
 const cmdExample = '`npx gallery-server --folder /path/to/images`';
 const imageFolder = getImageFolderFromCli();
 
+// console.log('serve index folder:', path.resolve(__dirname, '../client/build'));
+
 app.use(serve(imageFolder));
-app.use(serve('client/build'));
+app.use(serve(path.resolve(__dirname, '../client/build')));
 
 // logger
 app.use(async (ctx, next) => {
@@ -44,12 +46,12 @@ app.use(async ctx => {
 });
 
 function sendImages(ctx) {
-  // ctx.set('Access-Control-Allow-Origin', '*');
+  ctx.set('Access-Control-Allow-Origin', '*');
   ctx.body = getImageSrcs(imageFolder);
 }
 
 function sendViewInfo(ctx) {
-  // ctx.set('Access-Control-Allow-Origin', '*');
+  ctx.set('Access-Control-Allow-Origin', '*');
   ctx.body = {
     showFooter: extractArg('view-footer', 'true') === 'true',
   };
