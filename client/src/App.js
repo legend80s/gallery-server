@@ -27,7 +27,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn More About @gallery-server
+          Give a <span role="img" aria-label="github star">⭐️</span> if this project helped you!
         </a>
       </footer>}
     </div>
