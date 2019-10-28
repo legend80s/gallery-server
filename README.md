@@ -52,6 +52,14 @@ Contributions, issues and feature requests are welcome!
 
 Feel free to check [issues page](https://github.com/legend80s/gallery-server/issues).
 
+## Todo
+
+- [ ] Any port.
+- [ ] Serve network images.
+- [ ] ipconfig. mimic create-react-app
+- [ ] Electron App
+- [ ] -v -h
+
 ## Show your support
 
 Give a ⭐️ if this project helped you!
