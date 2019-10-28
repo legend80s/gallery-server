@@ -30,6 +30,8 @@ npm install gallery-server -g
 
 ## Develop
 
+Install all the dependencies into `./package.json` not `./client/package.json`. The package.json in `client` exits only for `scripts`。
+
 ```sh
 npm run start -- --folder /path/to/images
 ```
@@ -54,7 +56,7 @@ Feel free to check [issues page](https://github.com/legend80s/gallery-server/iss
 
 ## Todo
 
-- [ ] Any port.
+- [ ] Any port. use unoccupied port
 - [ ] Serve network images.
 - [ ] ipconfig. mimic create-react-app
 - [ ] Electron App

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 // import logo from './logo.svg';
 import './App.css';
 import Gallery from './components/Gallery'
-import { HOST } from './constants';
+import { HOST } from '../../lib/constants';
 
 function App() {
   const [showFooter, setShowFooter] = useState(false);
@@ -37,16 +37,16 @@ function App() {
 
 export default App;
 
+/**
+ * @returns {Promise<void>}
+ */
 async function setFooterStatus(set) {
-  let viewInfo;
-
   try {
-    viewInfo = await window.fetch(`${HOST}/api/view`)
-      .then(resp => resp.json())
+    const resp = await window.fetch(`${HOST}/api/view`)
+    const viewInfo = await resp.json();
 
+    typeof viewInfo.showFooter === 'boolean' && set(viewInfo.showFooter);
   } catch (error) {
     return console.error('fetchImages', error);
   }
-
-  typeof viewInfo.showFooter === 'boolean' && set(viewInfo.showFooter);
 }

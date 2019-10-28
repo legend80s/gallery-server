@@ -23,7 +23,8 @@
     "koa-static": "^5.0.0"
   },
   "devDependencies": {
-    "git-commit-msg-linter": "^2.3.8"
+    "git-commit-msg-linter": "^2.3.8",
+    "react-app-rewired": "^2.1.4"
   },
   "scripts": {
     "prestart": "npm run postinstall",
@@ -31,7 +32,8 @@
     "postinstall": "npm run echo:client-build && npm run build:client",
     "echo:client-build": "echo '\\x1B[32m[gallery-server]\\x1B[0m npm run postinstall: cd client && npm run build'",
     "build:client": "cd client && npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start:client": "cd client && npm run start",
+    "test": "build:client"
   },
   "bin": {
     "gallery-server": "server/app.js"

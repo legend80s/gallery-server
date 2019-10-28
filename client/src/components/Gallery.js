@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ImageGallery from 'react-image-gallery';
 import './Gallery.css';
-import { HOST } from '../constants';
+import { HOST } from '../../../lib/constants';
 
 export default function Gallery() {
   const [showNav, setShowNav] = useState(true);
