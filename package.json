@@ -14,13 +14,14 @@
   ],
   "main": "server/app.js",
   "dependencies": {
+    "address": "^1.1.2",
+    "is-image": "^3.0.0",
+    "koa": "^2.10.0",
+    "koa-static": "^5.0.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-image-gallery": "^0.9.1",
-    "react-scripts": "3.2.0",
-    "is-image": "^3.0.0",
-    "koa": "^2.10.0",
-    "koa-static": "^5.0.0"
+    "react-scripts": "3.2.0"
   },
   "devDependencies": {
     "git-commit-msg-linter": "^2.3.8",
@@ -29,6 +30,7 @@
   "scripts": {
     "prestart": "npm run postinstall",
     "start": "node server/app.js",
+    "start:no-client-build": "node server/app.js",
     "postinstall": "npm run echo:client-build && npm run build:client",
     "echo:client-build": "echo '\\x1B[32m[gallery-server]\\x1B[0m npm run postinstall: cd client && npm run build'",
     "build:client": "cd client && npm run build",

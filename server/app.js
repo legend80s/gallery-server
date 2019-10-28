@@ -5,7 +5,9 @@ const serve = require('koa-static');
 const path = require('path');
 const fs = require('fs');
 const isImage = require('is-image');
+const address = require('address');
 const packageJson = require('../package.json');
+const { DEFAULT_PORT } = require('../lib/constants');
 
 const app = new Koa();
 
@@ -17,19 +19,26 @@ const BOLD = '\x1b[1m';
 const ITALIC = '\x1b[3m';
 const EOS = '\x1b[0m';
 
+const ip = address.ip();
+const REPO = 'https://github.com/legend80s/gallery-server';
+
 console.info(`${BOLD}${ITALIC}
   gallery-server@${packageJson.version}
-  github: https://github.com/legend80s/gallery-server
+  github: ${REPO}
   ${EOS}
 `);
 
 const cmdExample = '`npx gallery-server --folder /path/to/images`';
 const imageFolder = getImageFolderFromCli();
+const buildFolder = path.resolve(__dirname, '../client/build');
 
 // console.log('serve index folder:', path.resolve(__dirname, '../client/build'));
 
+/** unique port to avoid conflicts */
+const port = DEFAULT_PORT;
+
 app.use(serve(imageFolder));
-app.use(serve(path.resolve(__dirname, '../client/build')));
+app.use(serve(buildFolder));
 
 // logger
 app.use(async (ctx, next) => {
@@ -39,6 +48,7 @@ app.use(async (ctx, next) => {
 });
 
 // x-response-time
+// middleware extract to file
 app.use(async (ctx, next) => {
   const start = Date.now();
   await next();
@@ -57,40 +67,36 @@ app.use(async ctx => {
     }
   }
 
-  ctx.redirect('https://github.com/legend80s/gallery-server');
+  ctx.redirect(REPO);
 });
 
 function sendImages(ctx) {
   ctx.set('Access-Control-Allow-Origin', '*');
+
   ctx.body = getImageSrcs(imageFolder);
 }
 
 function sendViewInfo(ctx) {
   ctx.set('Access-Control-Allow-Origin', '*');
+
   ctx.body = {
     showFooter: extractArg('view-footer', 'true') === 'true',
   };
 }
 
-/** unique port to avoid conflicts */
-// TODO: reuse client constants
-const DEFAULT_PORT = 6834;
-const port = DEFAULT_PORT;
-
 app.listen(port, () => {
-  console.log(
-    `${YELLOW}[gallery-server]${EOS}`,
-    `open ${GREEN}${UNDERLINED}http://localhost:${port}/${EOS}`,
-    'to enjoy your local image gallery served from',
-    `${GREEN}${UNDERLINED}${imageFolder}${EOS}`,
-  );
+  console.log(`Local images served from ${GREEN}${UNDERLINED}${imageFolder}${EOS}. You can now enjoy gallery in the browser.`);
+  console.log();
+  console.log(`  Local: ${GREEN}${UNDERLINED}http://localhost:${port}/${EOS}`);
+  ip && console.log(`  Network: ${GREEN}${UNDERLINED}http://${ip}:${port}/${EOS}`);
+  console.log();
 });
 
 function getImageSrcs(folder) {
   return findAllFiles(folder)
     .map(filePath => path.relative(folder, filePath))
     .filter(filename => isImage(filename))
-    .map(filename => `http://localhost:${port}/${filename.replace(/ /g, '%20')}`);
+    .map(filename => `/${filename.replace(/ /g, '%20')}`);
 }
 
 /**
