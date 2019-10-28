@@ -5,8 +5,23 @@ const serve = require('koa-static');
 const path = require('path');
 const fs = require('fs');
 const isImage = require('is-image');
+const packageJson = require('../package.json');
 
 const app = new Koa();
+
+const YELLOW = '\x1b[1;33m';
+const GREEN = '\x1b[0;32m';
+const GRAY = '\x1b[0;37m';
+const UNDERLINED = '\x1b[4m';
+const BOLD = '\x1b[1m';
+const ITALIC = '\x1b[3m';
+const EOS = '\x1b[0m';
+
+console.info(`${BOLD}${ITALIC}
+  gallery-server@${packageJson.version}
+  github: https://github.com/legend80s/gallery-server
+  ${EOS}
+`);
 
 const cmdExample = '`npx gallery-server --folder /path/to/images`';
 const imageFolder = getImageFolderFromCli();
@@ -58,15 +73,11 @@ function sendViewInfo(ctx) {
 }
 
 /** unique port to avoid conflicts */
+// TODO: reuse client constants
 const DEFAULT_PORT = 6834;
 const port = DEFAULT_PORT;
 
 app.listen(port, () => {
-  const YELLOW = '\x1b[1;33m';
-  const GREEN = '\x1b[0;32m';
-  const UNDERLINED = '\x1b[4m';
-  const EOS = '\x1b[0m';
-
   console.log(
     `${YELLOW}[gallery-server]${EOS}`,
     `open ${GREEN}${UNDERLINED}http://localhost:${port}/${EOS}`,
