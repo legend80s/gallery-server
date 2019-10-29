@@ -30,6 +30,12 @@ npm install gallery-server -g
 
 2. Enjoy：open <http://localhost:6834/> in your favorite browser.
 
+## Features
+
+1. Images in your PC can be viewed in your mobile phone's browser!
+2. More than one gallery can be served at the same time.
+3. A lot of gallery features, check it out at [react-image-gallery](https://www.npmjs.com/package/react-image-gallery).
+
 ## Develop
 
 Install all the dependencies into `./package.json` not `./client/package.json`. The package.json in `client` exits only for `scripts`。
@@ -58,12 +64,13 @@ Feel free to check [issues page](https://github.com/legend80s/gallery-server/iss
 
 ## Todo
 
-- [ ] Any port. use unoccupied port
+- [x] Any port. use unoccupied port.
 - [ ] Serve network images.
-- [ ] ipconfig. mimic create-react-app
+- [x] Use network IP. mimic create-react-app.
 - [ ] Electron App
-- [ ] -v -h
-- [x] View on mobile.
+- [ ] Show help Information on cli `-v` `-h`.
+- [x] Viewable on mobile.
+- [ ] Adapt to mobile.
 
 ## Show your support
 
