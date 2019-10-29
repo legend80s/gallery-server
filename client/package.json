@@ -1,10 +1,6 @@
 {
-  "name": "gallery-server",
-  "version": "0.1.0",
-  "description": "image gallery using react-image-gallery",
+  "description": "client code for gallery-server",
   "private": true,
-  "dependencies": {
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
