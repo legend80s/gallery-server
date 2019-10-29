@@ -7,6 +7,7 @@ const fs = require('fs');
 const isImage = require('is-image');
 const address = require('address');
 const boxen = require('boxen');
+const detect = require('detect-port');
 
 const packageJson = require('../package.json');
 const { DEFAULT_PORT } = require('../lib/constants');
@@ -36,9 +37,6 @@ const imageFolder = getImageFolderFromCli();
 const buildFolder = path.resolve(__dirname, '../client/build');
 
 // console.log('serve index folder:', path.resolve(__dirname, '../client/build'));
-
-/** unique port to avoid conflicts */
-const port = DEFAULT_PORT;
 
 app.use(serve(imageFolder));
 app.use(serve(buildFolder));
@@ -87,13 +85,28 @@ function sendViewInfo(ctx) {
   };
 }
 
-app.listen(port, () => {
-  console.log(`Local images served from ${GREEN}${UNDERLINED}${imageFolder}${EOS}. You can now enjoy gallery in the browser.`);
-  console.log();
-  console.log(`  PC:     ${GREEN}${UNDERLINED}http://localhost:${port}/${EOS}`);
-  ip && console.log(`  Mobile: ${GREEN}${UNDERLINED}http://${ip}:${port}/${EOS}`);
-  console.log();
+choosePort(DEFAULT_PORT).then((port) => {
+  app.listen(port, () => {
+    console.log(`Local images served from ${GREEN}${UNDERLINED}${imageFolder}${EOS}. You can now enjoy gallery in the browser.`);
+    console.log();
+    console.log(`  PC:     ${GREEN}${UNDERLINED}http://localhost:${port}/${EOS}`);
+    ip && console.log(`  Mobile: ${GREEN}${UNDERLINED}http://${ip}:${port}/${EOS}`);
+    console.log();
+  });
+}).catch(error => {
+  console.error('choosePort', error);
 });
+
+async function choosePort(defaultPort) {
+  const port = await detect(defaultPort);
+
+  if (defaultPort !== port) {
+    console.log(`Port#${defaultPort} was occupied, change to ${port}.\n`);
+  }
+
+  return port;
+}
+
 
 function getImageSrcs(folder) {
   return findAllFiles(folder)
