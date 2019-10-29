@@ -2,7 +2,7 @@
 
 > Powerful yet simple Node.js local image viewer on your PC or mobile using react-image-gallery.
 
-![gallery-server-demo](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page.png)
+![gallery-server-demo](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page.jpg)
 
 #### **<p align="center">Beautiful Local Image Viewer</p>**
 

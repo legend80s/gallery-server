@@ -107,7 +107,6 @@ async function choosePort(defaultPort) {
   return port;
 }
 
-
 function getImageSrcs(folder) {
   return findAllFiles(folder)
     .map(filePath => path.relative(folder, filePath))
