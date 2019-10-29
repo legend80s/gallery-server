@@ -39,11 +39,10 @@
     "prestart": "npm run postinstall",
     "start": "node server/app.js",
     "start:no-client-build": "node server/app.js",
-    "postinstall": "npm run echo:client-build && npm run build:client",
-    "echo:client-build": "echo '\\x1B[32m[gallery-server]\\x1B[0m npm run postinstall: cd client && npm run build'",
+    "prepublish": "npm run build:client",
     "build:client": "cd client && npm run build",
     "start:client": "cd client && npm run start",
-    "test": "build:client"
+    "test": "npm run build:client"
   },
   "bin": {
     "gallery-server": "server/app.js"
