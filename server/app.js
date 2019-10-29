@@ -90,8 +90,8 @@ function sendViewInfo(ctx) {
 app.listen(port, () => {
   console.log(`Local images served from ${GREEN}${UNDERLINED}${imageFolder}${EOS}. You can now enjoy gallery in the browser.`);
   console.log();
-  console.log(`  Local: ${GREEN}${UNDERLINED}http://localhost:${port}/${EOS}`);
-  ip && console.log(`  Network: ${GREEN}${UNDERLINED}http://${ip}:${port}/${EOS}`);
+  console.log(`  PC:     ${GREEN}${UNDERLINED}http://localhost:${port}/${EOS}`);
+  ip && console.log(`  Mobile: ${GREEN}${UNDERLINED}http://${ip}:${port}/${EOS}`);
   console.log();
 });
 
