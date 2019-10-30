@@ -1,89 +1,92 @@
-import React, { useState, useEffect, useRef } from 'react';
-import ImageGallery from 'react-image-gallery';
+import React, { useState, useEffect } from 'react';
+import Carousel, { Modal, ModalGateway } from 'react-images';
 import './Gallery.css';
 
-export default function Gallery() {
-  const [showNav, setShowNav] = useState(true);
-  const [showThumbnails, setShowThumbnails] = useState(true);
-  const [images, setImages] = useState([]);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const galleryRef = useRef(null);
+export function Gallery() {
+  const [images, setPhotos] = useState([]);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
-    collect(setImages);
-  }, [])
+    fetchPhotos().then(urls => {
+      setPhotos(urls.map(url => {
+        console.log('url:', url);
+        const matches = url.match(/\/([^\s/]+)\.[a-z]+$/);
 
-  // let isFullscreen = false;
-  const onScreenChange = (fullscreenElement) => {
-    // console.log('fullscreenElement:', fullscreenElement);
-    const isFullscreen = !!fullscreenElement;
-    // console.log('isFullscreen onScreenChange:', isFullscreen);
-    setIsFullscreen(isFullscreen);
+        return {
+          caption: matches ? matches[1] : '',
+          src: url,
+        };
+      }));
+    });
+  }, []);
 
-    if (isFullscreen) {
-      setShowNav(false);
-      setShowThumbnails(false);
-    } else {
-      setShowNav(true);
-      setShowThumbnails(true);
-    }
+  const toggleLightbox = (index) => {
+    setSelectedIndex(index);
+    setModalIsOpen(!modalIsOpen);
   };
 
-  const onClick = () => {
-    if (ismimicDbClick('ImageGallery')) {
-      // console.log('isFullscreen onClick:', isFullscreen);
-      isFullscreen ? galleryRef.current.exitFullScreen() : galleryRef.current.fullScreen();
-    }
-  };
-
-  return (
-    <ImageGallery
-      ref={galleryRef}
-      items={images}
-      showBullets={true}
-      showIndex={true}
-      slideOnThumbnailOver={false}
-      useBrowserFullscreen={true}
-      showNav={showNav}
-      showThumbnails={showThumbnails}
-      onScreenChange={onScreenChange}
-      onClick={onClick}
-    />
-  );
+  return !modalIsOpen ? <Album>
+      {images.map(({ author, caption, src }, j) => (
+        <Image onClick={() => toggleLightbox(j)} key={src}>
+          <img
+            alt={caption}
+            src={src}
+            style={{
+              cursor: 'pointer',
+              width: '97%',
+              // height: '94%',
+              // objectFit: 'cover',
+            }}
+          />
+        </Image>
+      ))}
+    </Album> : <ModalGateway>
+    {modalIsOpen ? (
+      <Modal onClose={() => setModalIsOpen(!modalIsOpen)}>
+        <Carousel views={images} currentIndex={selectedIndex} />
+      </Modal>
+    ) : null}
+  </ModalGateway>;
 }
 
-function ismimicDbClick(key) {
-  const now = Date.now();
-  const prevClickTimestamp = ismimicDbClick.prevClickTimestamps[key] || 0;
+const gutter = 4;
 
-  /** time gap in milliseconds between two clicks */
-  const gap = now - prevClickTimestamp;
+const Album = (props) => (
+  <div
+    style={{
+      overflow: 'hidden',
+      marginLeft: gutter,
+      marginRight: gutter,
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+    }}
+    {...props}
+  />
+);
 
-  // console.log({ now, prevClickTimestamp, gap });
-
-  const isdbClick = gap >= 100 && gap <= 500;
-
-  // save previous click timestamp
-  ismimicDbClick.prevClickTimestamps[key] = now;
-
-  return isdbClick;
-}
-
-ismimicDbClick.prevClickTimestamps = {};
+const Image = (props) => (
+  <div
+    className="image-wrapper"
+    {...props}
+  />
+);
 
 /**
- * Collect images from API.
+ * Fetch photos from remote.
  *
- * @param {(images: GalleryImage[]) => void} setImages
- * @returns {Promise<void>}
+ * @returns {Promise<string[]>}
  */
-async function collect(setImages) {
+async function fetchPhotos() {
   try {
     const resp = await window.fetch('/api/images');
-    const srcs = await resp.json();
+    const urls = await resp.json();
 
-    return setImages(srcs.map(src => ({ original: src, thumbnail: src })));
+    return urls;
   } catch (error) {
-    console.error('collect', error);
+    console.error('fetchPhotos', error);
+
+    return [];
   }
 }

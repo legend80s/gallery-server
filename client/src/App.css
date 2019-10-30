@@ -4,7 +4,7 @@
 }
 
 .Gallery-wrapper {
-  margin: 0 18%;
+  margin: 0.2% 18% 60px;
 }
 
 .App-logo {
@@ -31,4 +31,15 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+@media screen and (max-width: 450px) {
+  .Gallery-wrapper .image-wrapper {
+    width: calc(31% - 2 * 2px);
+    height: 20vh;
+  }
+
+  .Gallery-wrapper {
+    margin: 0.2% 1% 60px;
+  }
 }

@@ -1,1 +1,18 @@
-@import "~react-image-gallery/styles/css/image-gallery.css";
+.image-wrapper {
+  background-color: #eee;
+  box-sizing: border-box;
+  margin: 0.5vw 2px;
+  overflow: scroll;
+  width: calc(20% - 2 * 2px);
+  height: 12vw;
+  border-radius: 0.2vw;
+  border: 1px solid salmon;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-wrapper:hover {
+  opacity: 0.8;
+}

@@ -1,7 +1,7 @@
 {
   "name": "gallery-server",
   "version": "1.2.3",
-  "description": "Powerful yet simple Node.js local image viewer on your PC or mobile using react-image-gallery",
+  "description": "Powerful yet simple Node.js local image viewer on your PC or mobile.",
   "keywords": [
     "pc",
     "mobile",
@@ -12,7 +12,7 @@
     "server",
     "local gallery",
     "local image viewer",
-    "react-image-gallery"
+    "react"
   ],
   "main": "server/app.js",
   "files": [
@@ -32,13 +32,13 @@
     "git-commit-msg-linter": "^2.3.8",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
-    "react-image-gallery": "^0.9.1",
+    "react-images": "^1.0.0",
     "react-scripts": "3.2.0"
   },
   "scripts": {
     "prestart": "npm run build:client",
     "start": "node server/app.js",
-    "start:no-client-build": "node server/app.js",
+    "start:server": "node server/app.js",
     "prepublish": "npm run clean && npm run build:client",
     "clean": "rm -rf ./client/build/",
     "build:client": "cd client && npm run build",
