@@ -43,7 +43,11 @@ npm install gallery-server -g
 ### Enjoy on Mobile
 
 <p align="center">
-  <img alt="album-mobile" src="https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/album-mobile.jpg" width="45%" /><img alt="gallery-mobile" src="https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/gallery-mobile.jpg" width="45%" />
+  <img alt="album-mobile" src="https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/album-mobile.jpg" width="40%" /> 
+</p>
+
+<p align="center">
+  <img alt="gallery-mobile" src="https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/gallery-mobile.jpg" width="40%" />
 </p>
 
 *Photos from pixabay API of Yosemite.*
@@ -102,7 +106,7 @@ Feel free to check [issues page](https://github.com/legend80s/gallery-server/iss
 - [ ] Electron App
 - [ ] Show help Information on cli `-v` `-h`.
 - [x] Viewable on mobile.
-- [ ] Adapt to mobile.
+- [x] Adapt to mobile.
 
 ## Show your support
 
