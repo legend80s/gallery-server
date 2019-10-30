@@ -2,9 +2,11 @@
 
 > Powerful yet simple Node.js local image viewer on your PC or mobile.
 
-![demo-page-fullscreen](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page-fullscreen.png)
+<img alt="demo-page-fullscreen" src="https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page-fullscreen.png" width="100%" />
 
-![gallery-mobile](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/gallery-mobile.jpg)
+<p align="center">
+  <img alt="gallery-mobile" src="https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/gallery-mobile.jpg" width="40%" />
+</p>
 
 #### **<p align="center">Beautiful Local Image Viewer</p>**
 
@@ -28,8 +30,6 @@ npm install gallery-server -g
    npx gallery-server --folder /path/to/images --view-footer=false
    ```
 
-   ![gallery-server-cli-demo](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/cli-demo.jpg)
-
 2. Enjoy：open <http://localhost:6834/> in your favorite browser.
 
 ### Enjoy on PC
@@ -42,9 +42,9 @@ npm install gallery-server -g
 
 ### Enjoy on Mobile
 
-![album-mobile](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/album-mobile.jpg)
-
-![gallery-mobile](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/gallery-mobile.jpg)
+<p align="center">
+  <img alt="album-mobile" src="https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/album-mobile.jpg" width="45%" /><img alt="gallery-mobile" src="https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/gallery-mobile.jpg" width="45%" />
+</p>
 
 *Photos from pixabay API of Yosemite.*
 
