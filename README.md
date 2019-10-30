@@ -34,7 +34,7 @@ npm install gallery-server -g
 
 1. Images in your PC can be viewed in your mobile phone's browser!
 2. More than one gallery can be served at the same time.
-3. A lot of gallery features.
+3. A lot of gallery features. Check it at [react-images](https://jossmac.github.io/react-images/#/accessibility).
 
 ## Develop
 
