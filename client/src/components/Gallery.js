@@ -8,18 +8,27 @@ export function Gallery() {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
-    fetchPhotos().then(urls => {
+    const path = '/api/images';
+    // const path = 'https://pixabay.com/api/?key=11039936-6e77e51408504e6821e3c708b&q=yosemite&image_type=photo&per_page=22';
+    fetchPhotos(path).then(urls => {
+      // console.log('urls:', urls);
+
+      // setPhotos(urls.hits.map(url => {
       setPhotos(urls.map(url => {
-        console.log('url:', url);
+        // console.log('url:', url);
         const matches = url.match(/\/([^\s/]+)\.[a-z]+$/);
 
         return {
+          // caption: url.tags + '. Downloads ' + url.downloads,
           caption: matches ? matches[1] : '',
+          // src: url.webformatURL,
           src: url,
         };
       }));
     });
   }, []);
+
+  // console.log('images:', images);
 
   const toggleLightbox = (index) => {
     setSelectedIndex(index);
@@ -35,8 +44,8 @@ export function Gallery() {
             style={{
               cursor: 'pointer',
               width: '97%',
-              // height: '94%',
-              // objectFit: 'cover',
+              height: '94%',
+              objectFit: 'cover',
             }}
           />
         </Image>
@@ -78,9 +87,9 @@ const Image = (props) => (
  *
  * @returns {Promise<string[]>}
  */
-async function fetchPhotos() {
+async function fetchPhotos(path) {
   try {
-    const resp = await window.fetch('/api/images');
+    const resp = await window.fetch(path);
     const urls = await resp.json();
 
     return urls;

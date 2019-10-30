@@ -2,7 +2,9 @@
 
 > Powerful yet simple Node.js local image viewer on your PC or mobile.
 
-![gallery-server-demo](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page.jpg)
+![demo-page-fullscreen](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page-fullscreen.png)
+
+![gallery-mobile](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/gallery-mobile.jpg)
 
 #### **<p align="center">Beautiful Local Image Viewer</p>**
 
@@ -29,6 +31,22 @@ npm install gallery-server -g
    ![gallery-server-cli-demo](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/cli-demo.jpg)
 
 2. Enjoy：open <http://localhost:6834/> in your favorite browser.
+
+### Enjoy on PC
+
+![demo-page-album](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page-album.png)
+
+![demo-page-carousel](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page-carousel.png)
+
+![demo-page-fullscreen-only-image](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page-fullscreen-only-image.png)
+
+### Enjoy on Mobile
+
+![album-mobile](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/album-mobile.jpg)
+
+![gallery-mobile](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/gallery-mobile.jpg)
+
+*Photos from pixabay API of Yosemite.*
 
 ## Features
 
