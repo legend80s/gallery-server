@@ -1,7 +1,5 @@
 # Welcome to gallery-server 👋
 
-> Powerful yet simple Node.js local image viewer on your PC or mobile.
-
 <img alt="demo-page-fullscreen" src="https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page-fullscreen.png" width="100%" />
 
 <p align="center">
@@ -9,6 +7,8 @@
 </p>
 
 #### **<p align="center">Beautiful Local Image Viewer</p>**
+
+> Powerful yet simple Node.js local image viewer on your PC or mobile.
 
 ## Install
 
