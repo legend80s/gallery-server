@@ -101,9 +101,8 @@ Feel free to check [issues page](https://github.com/legend80s/gallery-server/iss
 ## Todo
 
 - [x] Any port. use unoccupied port.
-- [ ] Serve network images.
+- [ ] Build with remote client to support wide range of client gallery.
 - [x] Use network IP. mimic create-react-app.
-- [ ] Electron App
 - [ ] Show help Information on cli `-v` `-h`.
 - [x] Viewable on mobile.
 - [x] Adapt to mobile.
