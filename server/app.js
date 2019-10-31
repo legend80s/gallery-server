@@ -117,17 +117,23 @@ function getImageSrcs(folder) {
 /**
  * Find all the files in the target folder recursively.
  * @param {string} folder directory
+ * @param {string} excludedFolder directory ignored
  * @returns {string[]} file paths
  */
-function findAllFiles(folder) {
+function findAllFiles(folder, excludedFolder = 'node_modules') {
   return fs.readdirSync(folder).reduce((acc, cur) => {
     // console.log('folder', folder, 'cur:', cur);
+
+    if (folder.endsWith(`/${excludedFolder}`)) {
+      return acc;
+    }
+
     const filePath = path.join(folder, cur);
 
-    if (fs.statSync(filePath).isFile()) {
-      acc.push(filePath);
-    } else {
+    if (fs.statSync(filePath).isDirectory()) {
       acc.push(...findAllFiles(filePath));
+    } else {
+      acc.push(filePath);
     }
 
     return acc;
