@@ -38,8 +38,8 @@ npm install gallery-server -g
    # or
    npx gallery-server --folder /path/to/images
 
-   # no footer
-   npx gallery-server --folder /path/to/images --view-footer=false
+   # for more usage
+   gallery-server -h
    ```
 
 2. Enjoy：open <http://localhost:6834/?token=${token}> in your favorite browser.
