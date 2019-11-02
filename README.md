@@ -121,8 +121,9 @@ Feel free to check [issues page](https://github.com/legend80s/gallery-server/iss
 * [x] Adapt to mobile.
 * [ ] Image lazy load.
 * [x] Security on privacy. only url with token is shareable.
-* [ ] Port customizable.
+* [x] Port customizable.
 * [x] Token customizable.
+* [x] Serve multiple folders in one cmd.
 
 ## Show your support
 
