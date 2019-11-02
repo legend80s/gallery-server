@@ -3,10 +3,6 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 4vmin;
-}
-
 .App-footer {
   background-color: #282c34;
   display: flex;
@@ -19,6 +15,18 @@
   position: fixed;
   bottom: 0;
   width: 100%;
+}
+
+.App-footer .toggle-wrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.25rem;
+}
+
+.App-footer .toggle-wrapper .toggle {
+  margin-left: 0.4rem;
 }
 
 .tips {

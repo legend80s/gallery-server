@@ -1,5 +1,8 @@
 .gallery {
-  padding: 0.2% 6% 60px;
+  padding: 0.2% 6% 76px;
+}
+
+.gallery.dark {
   background-color: #333;
 }
 

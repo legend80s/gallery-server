@@ -6,7 +6,10 @@ import './Gallery.css';
 import fetch from '../utils/fetch'
 import token from '../utils/token';
 
-export function Gallery() {
+export const THEME_LIGHT = 'light';
+export const THEME_DARK = 'dark';
+
+export function Gallery({ theme }) {
   const [photos, setPhotos] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -17,20 +20,24 @@ export function Gallery() {
     fetchPhotos(path).then(photos => {
       // console.log('urls:', urls);
 
-      // setPhotos(urls.hits.map(url => {
-      setPhotos(photos.map(({ src, caption, width, height }) => {
+      // setPhotos(photos.hits.map(({ tags, downloads, webformatURL, webformatWidth, webformatHeight }) => {
+      setPhotos(photos.map(photo => {
         // console.log('url:', url);
         // extract the photo name from src
+        const { src } = photo;
 
         return {
-          // caption: url.tags + '. Downloads ' + url.downloads,
-          caption,
-          // src: url.webformatURL,
+          ...photo,
           src: src + (src.includes('?') ? '&' : '?') + `token=${token}`,
-
-          width,
-          height,
         };
+
+        // return {
+        //   caption: tags + '. Downloads ' + downloads,
+        //   src: webformatURL,
+
+        //   width: webformatWidth,
+        //   height: webformatHeight,
+        // };
       }));
     });
   }, []);
@@ -42,7 +49,7 @@ export function Gallery() {
     setModalIsOpen(!modalIsOpen);
   };
 
-  return (<div className="gallery">
+  return (<div className={'gallery ' + theme}>
     {modalIsOpen && <ModalGateway>
         <Modal onClose={() => setModalIsOpen(!modalIsOpen)}>
           <Carousel views={photos} currentIndex={selectedIndex} />

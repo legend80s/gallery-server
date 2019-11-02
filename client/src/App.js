@@ -1,21 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
-import { Gallery } from './components/Gallery'
+import Toggle from 'react-toggle';
+import { Gallery, THEME_LIGHT, THEME_DARK } from './components/Gallery'
 import fetch from './utils/fetch'
+
+import './App.css';
+import "react-toggle/style.css";
 
 function App() {
   const [isFooterVisible, setShowFooter] = useState(false);
+  const [theme, setTheme] = useState(THEME_LIGHT);
 
   useEffect(() => {
     setFooterStatus(setShowFooter);
   }, []);
 
+  const toggleTheme = () => {
+    setTheme(theme === THEME_LIGHT ? THEME_DARK : THEME_LIGHT);
+  };
+
   return (
     <div className="App">
-      <Gallery />
+      <Gallery theme={theme} />
 
       {isFooterVisible && <footer className="App-footer">
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
+        <div className="toggle-wrapper">
+          <span>Theme</span>
+
+          <Toggle
+            className="toggle"
+            defaultChecked={false}
+            icons={false}
+            onChange={toggleTheme}
+          />
+        </div>
+
         <p className="tips">
           Powered by @gallery-server
         </p>
