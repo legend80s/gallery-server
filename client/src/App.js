@@ -4,7 +4,7 @@ import './App.css';
 import { Gallery } from './components/Gallery'
 
 function App() {
-  const [showFooter, setShowFooter] = useState(false);
+  const [isFooterVisible, setShowFooter] = useState(false);
 
   useEffect(() => {
     setFooterStatus(setShowFooter);
@@ -16,7 +16,7 @@ function App() {
         <Gallery></Gallery>
       </main>
 
-      {showFooter && <footer className="App-footer">
+      {isFooterVisible && <footer className="App-footer">
         {/* <img src={logo} className="App-logo" alt="logo" /> */}
         <p className="tips">
           Powered by @gallery-server
@@ -42,9 +42,9 @@ export default App;
 async function setFooterStatus(set) {
   try {
     const resp = await window.fetch('/api/view')
-    const viewInfo = await resp.json();
+    const { isFooterVisible } = await resp.json();
 
-    typeof viewInfo.showFooter === 'boolean' && set(viewInfo.showFooter);
+    typeof isFooterVisible === 'boolean' && set(isFooterVisible);
   } catch (error) {
     return console.error('fetchImages', error);
   }

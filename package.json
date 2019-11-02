@@ -1,8 +1,9 @@
 {
   "name": "gallery-server",
   "version": "1.3.1",
-  "description": "Powerful yet simple Node.js local image viewer on your PC or mobile.",
+  "description": "Beautiful and powerful yet simple local image viewer on your PC or mobile.",
   "keywords": [
+    "beautiful",
     "pc",
     "mobile",
     "local",
@@ -23,6 +24,7 @@
   "dependencies": {
     "address": "^1.1.2",
     "boxen": "^4.1.0",
+    "commander": "^3.0.2",
     "detect-port": "^1.3.0",
     "is-image": "^3.0.0",
     "koa": "^2.10.0",

@@ -8,8 +8,9 @@ const isImage = require('is-image');
 const address = require('address');
 const boxen = require('boxen');
 const detect = require('detect-port');
+const program = require('commander');
 
-const packageJson = require('../package.json');
+const { version, description, name } = require('../package.json');
 const { DEFAULT_PORT } = require('../lib/constants');
 
 const app = new Koa();
@@ -27,13 +28,28 @@ const REPO = 'https://github.com/legend80s/gallery-server';
 
 console.info(
   boxen(
-    `${BOLD}${ITALIC}gallery-server@${packageJson.version}\ngithub: ${REPO}${EOS}`,
+    `${BOLD}${ITALIC}gallery-server@${version}\ngithub: ${REPO}${EOS}`,
     { margin: 1, padding: { top: 1, right: 1, bottom: 1, left: 1 }, },
   ),
 );
 
-const cmdExample = '`npx gallery-server --folder /path/to/images`';
-const imageFolder = getImageFolderFromCli();
+program
+  .version(version, '-v, --version', 'output the version number')
+  .description(description)
+  .name(name)
+  .usage('-f <folder>')
+  .option('-f, --folder <folder>', 'photos folder to serve')
+  .option('-d, --directory <directory>', 'photos folder to serve')
+  .option('--no-footer', 'hide the footer bar')
+
+program.parse(process.argv);
+// console.log('program:', program);
+
+const { folder, directory, footer: isFooterVisible } = program;
+
+const imageFolder = folder || directory;
+validateFolder(imageFolder);
+
 const buildFolder = path.resolve(__dirname, '../client/build');
 
 // console.log('serve index folder:', path.resolve(__dirname, '../client/build'));
@@ -81,13 +97,16 @@ function sendViewInfo(ctx) {
   ctx.set('Access-Control-Allow-Origin', '*');
 
   ctx.body = {
-    showFooter: extractArg('view-footer', 'true') === 'true',
+    isFooterVisible,
   };
 }
 
 choosePort(DEFAULT_PORT).then((port) => {
   app.listen(port, () => {
-    console.log(`Local images served from ${GREEN}${UNDERLINED}${imageFolder}${EOS}. You can now enjoy gallery in the browser.`);
+    console.log(
+      `Local images served from ${GREEN}${UNDERLINED}${imageFolder}${EOS}.`,
+      `You can now enjoy the gallery in the browser.`,
+    );
     console.log();
     console.log(`  PC:     ${GREEN}${UNDERLINED}http://localhost:${port}/${EOS}`);
     ip && console.log(`  Mobile: ${GREEN}${UNDERLINED}http://${ip}:${port}/${EOS}`);
@@ -140,42 +159,17 @@ function findAllFiles(folder, excludedFolder = 'node_modules') {
   }, []);
 }
 
-function extractArg(arg, defaultVal = '') {
-  // console.log('process.argv.slice(2):', process.argv.slice(2));
-
-  const argString = process.argv.slice(2).join(' ');
-  // console.log('argString:', argString);
-  // match `--folder /path/to/images` or `--folder=/path/to/images`
-  const matches = argString.match(new RegExp(`--${arg}\\s(\\S+)`)) ||
-    argString.match(new RegExp(`--${arg}=(\\S+)`));
-
-  return matches && matches[1] || defaultVal;
-}
-
-function getImageFolderFromCli() {
-  const folder = extractArg('folder');
-
-  if (!folder) {
-    throw new TypeError('folder required. Right example: ' + cmdExample);
-  }
-
-  if (folder) {
-    validateFolder(folder);
-  }
-
-  return folder;
-}
-
 function validateFolder(folder) {
   let stat;
+  const CMD_EXAMPLE = '`npx gallery-server --folder /path/to/images`';
 
   try {
     stat = fs.lstatSync(folder);
   } catch (error) {
-    throw new TypeError(`folder (${folder}) not exists. Right example: ${cmdExample}`);
+    throw new TypeError(`folder (${folder}) not exists. Right example: ${CMD_EXAMPLE}`);
   }
 
   if (stat && !stat.isDirectory()) {
-    throw new TypeError('folder is not a directory. Right example: ' + cmdExample);
+    throw new TypeError('folder is not a directory. Right example: ' + CMD_EXAMPLE);
   }
 }
