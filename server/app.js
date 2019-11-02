@@ -16,6 +16,7 @@ const { DEFAULT_PORT } = require('../lib/constants');
 const app = new Koa();
 
 const YELLOW = '\x1b[1;33m';
+const RED = '\x1b[0;31m';
 const GREEN = '\x1b[0;32m';
 const GRAY = '\x1b[0;37m';
 const UNDERLINED = '\x1b[4m';
@@ -48,7 +49,8 @@ program.parse(process.argv);
 const { folder, directory, footer: isFooterVisible } = program;
 
 const imageFolder = folder || directory;
-validateFolder(imageFolder);
+
+if (!validateFolder(imageFolder)) { process.exit(1); }
 
 const buildFolder = path.resolve(__dirname, '../client/build');
 
@@ -159,17 +161,28 @@ function findAllFiles(folder, excludedFolder = 'node_modules') {
   }, []);
 }
 
+/**
+ * validate folder from cli
+ * @param {string} folder
+ * @returns {boolean}
+ */
 function validateFolder(folder) {
   let stat;
-  const CMD_EXAMPLE = '`npx gallery-server --folder /path/to/images`';
+  const CMD_EXAMPLE = '`$ npx gallery-server --folder /path/to/images`';
 
   try {
     stat = fs.lstatSync(folder);
   } catch (error) {
-    throw new TypeError(`folder (${folder}) not exists. Right example: ${CMD_EXAMPLE}`);
+    console.error(`${RED}folder "${folder}" not exists. ${EOS}Right example: ${GREEN}${CMD_EXAMPLE}${EOS}\n`);
+
+    return false;
   }
 
   if (stat && !stat.isDirectory()) {
-    throw new TypeError('folder is not a directory. Right example: ' + CMD_EXAMPLE);
+    console.error(`${RED}"${folder}" is not a directory. ${EOS}Right example: ${GREEN}${CMD_EXAMPLE}${EOS}\n`);
+
+    return false;
   }
+
+  return true;
 }
