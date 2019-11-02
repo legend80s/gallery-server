@@ -71,6 +71,21 @@ npm install gallery-server -g
 3. Security on privacy to prevent eavesdropping. API or image resources without a specific token is forbidden, but you can still share with your friends by sending him the token.
 4. A lot of gallery features. Check it at [react-images](https://jossmac.github.io/react-images/#/accessibility).
 
+## FAQ
+
+1. Q: Why `403 forbidden`？
+
+   ```json
+   {
+     "code": 403,
+     "message": "Forbidden. `token` required. Please redirect to https://github.com/legend80s/gallery-server#faq for more information."
+   }
+   ```
+
+   - A: Add token to the resource url if you are the gallery owner otherwise ask the owner for the token.
+
+2. Photos in node_modules will be ignored for the performance.
+
 ## Develop
 
 Install all the dependencies into `./package.json`'s devDependencies not `./client/package.json`. The package.json in `client` exits only for `scripts`。
@@ -113,17 +128,17 @@ Feel free to check [issues page](https://github.com/legend80s/gallery-server/iss
 
 ## Todo
 
-* [x] Any port. use unoccupied port.
-* [ ] Build with remote client to support a wide range of client gallery.
-* [x] Use network IP. mimic create-react-app.
-* [x] Show help Information on cli `-v` `-h`.
-* [x] Viewable on mobile.
-* [x] Adapt to mobile.
-* [ ] Image lazy load.
-* [x] Security on privacy. only url with token is shareable.
-* [x] Port customizable.
-* [x] Token customizable.
-* [x] Serve multiple folders in one cmd.
+- [x] Any port. use unoccupied port.
+- [ ] Build with remote client to support a wide range of client gallery.
+- [x] Use network IP. mimic create-react-app.
+- [x] Show help Information on cli `-v` `-h`.
+- [x] Viewable on mobile.
+- [x] Adapt to mobile.
+- [ ] Image lazy load.
+- [x] Security on privacy. only url with token is shareable.
+- [x] Port customizable.
+- [x] Token customizable.
+- [x] Serve multiple folders in one cmd.
 
 ## Show your support
 

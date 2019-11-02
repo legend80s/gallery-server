@@ -32,7 +32,7 @@ module.exports.privatize = token => {
         ctx.status = 403;
         ctx.body = {
           code: 403,
-          message: '403 forbidden. Please redirect to ' +
+          message: 'Forbidden. `token` required. Please redirect to ' +
             `${repository.url}#faq for more information.`,
         };
 
