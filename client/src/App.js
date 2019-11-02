@@ -12,9 +12,7 @@ function App() {
 
   return (
     <div className="App">
-      <main className="Gallery-wrapper">
-        <Gallery></Gallery>
-      </main>
+      <Gallery />
 
       {isFooterVisible && <footer className="App-footer">
         {/* <img src={logo} className="App-logo" alt="logo" /> */}

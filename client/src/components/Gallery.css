@@ -1,18 +1,20 @@
-.image-wrapper {
-  background-color: #eee;
-  box-sizing: border-box;
-  margin: 0.5vw 2px;
-  overflow: scroll;
-  width: calc(20% - 2 * 2px);
-  height: 12vw;
-  border-radius: 0.2vw;
-  border: 1px solid salmon;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.gallery {
+  padding: 0.2% 6% 60px;
+  background-color: #333;
 }
 
-.image-wrapper:hover {
-  opacity: 0.8;
+.gallery img {
+  background-color: white;
+  border-radius: 0.2vw;
+}
+
+.gallery img:hover {
+  opacity: 0.9;
+}
+
+@media screen and (max-width: 600px) {
+  .gallery {
+    padding-left: 0.3vw;
+    padding-right: 0.3vw;
+  }
 }

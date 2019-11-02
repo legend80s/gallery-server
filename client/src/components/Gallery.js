@@ -1,88 +1,61 @@
 import React, { useState, useEffect } from 'react';
 import Carousel, { Modal, ModalGateway } from 'react-images';
+import PhotoWall from "react-photo-gallery";
+
 import './Gallery.css';
 import fetch from '../utils/fetch'
 import token from '../utils/token';
 
 export function Gallery() {
-  const [images, setPhotos] = useState([]);
+  const [photos, setPhotos] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
     const path = '/api/images';
     // const path = 'https://pixabay.com/api/?key=11039936-6e77e51408504e6821e3c708b&q=yosemite&image_type=photo&per_page=22';
-    fetchPhotos(path).then(urls => {
+    fetchPhotos(path).then(photos => {
       // console.log('urls:', urls);
 
       // setPhotos(urls.hits.map(url => {
-      setPhotos(urls.map(url => {
+      setPhotos(photos.map(({ src, caption, width, height }) => {
         // console.log('url:', url);
-        const matches = url.match(/\/([^\s/]+)\.[a-z]+$/);
+        // extract the photo name from src
 
         return {
           // caption: url.tags + '. Downloads ' + url.downloads,
-          caption: matches ? matches[1] : '',
+          caption,
           // src: url.webformatURL,
-          src: url + (url.includes('?') ? '&' : '?') + `token=${token}`,
+          src: src + (src.includes('?') ? '&' : '?') + `token=${token}`,
+
+          width,
+          height,
         };
       }));
     });
   }, []);
 
-  // console.log('images:', images);
+  // console.log('photos:', photos, 'selectedIndex', selectedIndex, 'modalIsOpen', modalIsOpen);
 
-  const toggleLightbox = (index) => {
+  const toggleModal = (index) => {
     setSelectedIndex(index);
     setModalIsOpen(!modalIsOpen);
   };
 
-  return !modalIsOpen ? <Album>
-      {images.map(({ author, caption, src }, j) => (
-        <Image onClick={() => toggleLightbox(j)} key={src}>
-          <img
-            alt={caption}
-            src={src}
-            style={{
-              cursor: 'pointer',
-              width: '97%',
-              height: '94%',
-              objectFit: 'cover',
-            }}
-          />
-        </Image>
-      ))}
-    </Album> : <ModalGateway>
-    {modalIsOpen ? (
-      <Modal onClose={() => setModalIsOpen(!modalIsOpen)}>
-        <Carousel views={images} currentIndex={selectedIndex} />
-      </Modal>
-    ) : null}
-  </ModalGateway>;
+  return (<div className="gallery">
+    {modalIsOpen && <ModalGateway>
+        <Modal onClose={() => setModalIsOpen(!modalIsOpen)}>
+          <Carousel views={photos} currentIndex={selectedIndex} />
+        </Modal>
+    </ModalGateway>}
+
+    {photos.length && <PhotoWall
+      photos={photos}
+      direction={'row'}
+      onClick={(_, { index }) => toggleModal(index)}
+    />}
+  </div>);
 }
-
-const gutter = 4;
-
-const Album = (props) => (
-  <div
-    style={{
-      overflow: 'hidden',
-      marginLeft: gutter,
-      marginRight: gutter,
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'center',
-    }}
-    {...props}
-  />
-);
-
-const Image = (props) => (
-  <div
-    className="image-wrapper"
-    {...props}
-  />
-);
 
 /**
  * Fetch photos from remote.
