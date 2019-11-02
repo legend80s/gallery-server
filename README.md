@@ -68,7 +68,7 @@ npm install gallery-server -g
 
 1. Images in your PC can be viewed in your mobile phone's browser!
 3. Security on privacy to prevent eavesdropping. API or image resources without a specific token is forbidden, but you can still share with your friends by sending him the token.
-3. Light and dark theme.
+3. Theme togglable between light and dark.
 4. More than one gallery can be served at the same time.
 5. A lot of gallery features. Check it at [react-images](https://jossmac.github.io/react-images/#/accessibility).
 
