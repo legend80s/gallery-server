@@ -9,6 +9,8 @@ const address = require('address');
 const boxen = require('boxen');
 const detect = require('detect-port');
 const program = require('commander');
+const { promisify } = require('util');
+const sizeOf = promisify(require('image-size'));
 
 const { version, description, name, repository } = require('../package.json');
 const { DEFAULT_PORT } = require('../lib/constants');
@@ -113,14 +115,38 @@ app.use(async ctx => {
   ctx.redirect(REPO);
 });
 
-function sendImages(ctx) {
-  // ctx.set('Access-Control-Allow-Origin', '*');
+async function sendImages(ctx) {
+  ctx.set('Access-Control-Allow-Origin', '*');
+  const srcs = getImageSrcs(imageFolder);
 
-  ctx.body = getImageSrcs(imageFolder);
+  const photos = await Promise.all(srcs.map(async src => {
+    let dimensions = { width: 1, height: 1 };
+
+    try {
+      dimensions = await sizeOf(imageFolder + src.replace(/%20/g, ' '));
+    } catch (error) {
+      console.error(error);
+    }
+
+    return {
+      caption: extractCaption(src),
+      src,
+      width: dimensions.width,
+      height: dimensions.height,
+    };
+  }));
+
+  ctx.body = photos;
+}
+
+function extractCaption(src) {
+  const matches = src.match(/\/([^\s/]+)\.[^.]+$/);
+
+  return matches ? matches[1] : '';
 }
 
 function sendViewInfo(ctx) {
-  // ctx.set('Access-Control-Allow-Origin', '*');
+  ctx.set('Access-Control-Allow-Origin', '*');
 
   ctx.body = {
     isFooterVisible,
