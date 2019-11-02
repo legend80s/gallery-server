@@ -20,7 +20,7 @@
 
 #### **<p align="center">Beautiful Local Image Viewer</p>**
 
-> Powerful yet simple Node.js local image viewer on your PC or mobile.
+> Beautiful and powerful yet simple local image viewer on your PC or mobile..
 
 ## Install
 
@@ -55,7 +55,7 @@ npm install gallery-server -g
 ### Enjoy on Mobile
 
 <p align="center">
-  <img alt="album-mobile" src="https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/album-mobile.jpg" width="40%" /> 
+  <img alt="album-mobile" src="https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/album-mobile.jpg" width="40%" />
 </p>
 
 <p align="center">
@@ -119,6 +119,7 @@ Feel free to check [issues page](https://github.com/legend80s/gallery-server/iss
 - [x] Viewable on mobile.
 - [x] Adapt to mobile.
 - [ ] Image lazy load.
+- [ ] Security on privacy. only url with token is shareable.
 
 ## Show your support
 
