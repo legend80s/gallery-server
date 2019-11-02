@@ -122,7 +122,7 @@ Feel free to check [issues page](https://github.com/legend80s/gallery-server/iss
 * [ ] Image lazy load.
 * [x] Security on privacy. only url with token is shareable.
 * [ ] Port customizable.
-* [ ] Token customizable.
+* [x] Token customizable.
 
 ## Show your support
 

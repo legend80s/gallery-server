@@ -1,5 +1,5 @@
 /**
- * Generate private token for privacy.
+ * Generate private token.
  * @returns {string}
  */
 module.exports.genToken = () => {

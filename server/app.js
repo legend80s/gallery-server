@@ -43,12 +43,13 @@ program
   .usage('-f <folder>')
   .option('-f, --folder <folder>', 'photos folder to serve')
   .option('-d, --directory <directory>', 'photos folder to serve')
+  .option('-t, --token <token>', 'secret token to prevent eavesdropping')
   .option('--no-footer', 'hide the footer bar')
 
 program.parse(process.argv);
 // console.log('program:', program);
 
-const { folder, directory, footer: isFooterVisible } = program;
+const { folder, directory, footer: isFooterVisible, token: tokenFromCli } = program;
 
 const imageFolder = folder || directory;
 
@@ -58,7 +59,7 @@ const buildFolder = path.resolve(__dirname, '../client/build');
 
 // console.log('serve index folder:', path.resolve(__dirname, '../client/build'));
 
-const token = genToken();
+const token = tokenFromCli || genToken();
 
 // add privacy middleware
 app.use(privatize(token));
