@@ -7,8 +7,8 @@
   <a href="https://www.npmjs.com/package/gallery-server">
     <img src="https://img.shields.io/npm/dm/gallery-server.svg" alt="npm downloads" />
   </a>
-  <a href="https://packagephobia.now.sh/result?p=commander" rel="nofollow">
-    <img src="https://packagephobia.now.sh/badge?p=gallery-server" alt="Install Size">
+  <a href="https://bundlephobia.com/result?p=gallery-server">
+    <img src="https://flat.badgen.net/bundlephobia/minzip/gallery-server" alt="Minified + gzip package size for gallery-server in KB">
   </a>
 </p>
 
