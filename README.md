@@ -112,14 +112,15 @@ Feel free to check [issues page](https://github.com/legend80s/gallery-server/iss
 
 ## Todo
 
-- [x] Any port. use unoccupied port.
-- [ ] Build with remote client to support wide range of client gallery.
-- [x] Use network IP. mimic create-react-app.
-- [ ] Show help Information on cli `-v` `-h`.
-- [x] Viewable on mobile.
-- [x] Adapt to mobile.
-- [ ] Image lazy load.
-- [ ] Security on privacy. only url with token is shareable.
+* [x] Any port. use unoccupied port.
+* [ ] Build with remote client to support wide range of client gallery.
+* [x] Use network IP. mimic create-react-app.
+* [ ] Show help Information on cli `-v` `-h`.
+* [x] Viewable on mobile.
+* [x] Adapt to mobile.
+* [ ] Image lazy load.
+* [x] Security on privacy. only url with token is shareable.
+* [ ] Port customizable.
 
 ## Show your support
 
