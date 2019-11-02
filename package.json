@@ -54,7 +54,7 @@
   "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/legend80s/gallery-server.git"
+    "url": "https://github.com/legend80s/gallery-server"
   },
   "bugs": {
     "url": "https://github.com/legend80s/gallery-server/issues"

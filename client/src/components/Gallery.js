@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Carousel, { Modal, ModalGateway } from 'react-images';
 import './Gallery.css';
+import fetch from '../utils/fetch'
+import token from '../utils/token';
 
 export function Gallery() {
   const [images, setPhotos] = useState([]);
@@ -22,7 +24,7 @@ export function Gallery() {
           // caption: url.tags + '. Downloads ' + url.downloads,
           caption: matches ? matches[1] : '',
           // src: url.webformatURL,
-          src: url,
+          src: url + (url.includes('?') ? '&' : '?') + `token=${token}`,
         };
       }));
     });
@@ -89,10 +91,7 @@ const Image = (props) => (
  */
 async function fetchPhotos(path) {
   try {
-    const resp = await window.fetch(path);
-    const urls = await resp.json();
-
-    return urls;
+    return await fetch(path);
   } catch (error) {
     console.error('fetchPhotos', error);
 

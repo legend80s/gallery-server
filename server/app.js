@@ -10,8 +10,10 @@ const boxen = require('boxen');
 const detect = require('detect-port');
 const program = require('commander');
 
-const { version, description, name } = require('../package.json');
+const { version, description, name, repository } = require('../package.json');
 const { DEFAULT_PORT } = require('../lib/constants');
+const { privatize } = require('./middlewares/privacy');
+const { genToken } = require('./utils/token');
 
 const app = new Koa();
 
@@ -25,7 +27,7 @@ const ITALIC = '\x1b[3m';
 const EOS = '\x1b[0m';
 
 const ip = address.ip();
-const REPO = 'https://github.com/legend80s/gallery-server';
+const REPO = repository.url;
 
 console.info(
   boxen(
@@ -55,6 +57,11 @@ if (!validateFolder(imageFolder)) { process.exit(1); }
 const buildFolder = path.resolve(__dirname, '../client/build');
 
 // console.log('serve index folder:', path.resolve(__dirname, '../client/build'));
+
+const token = genToken();
+
+// add privacy middleware
+app.use(privatize(token));
 
 app.use(serve(imageFolder));
 app.use(serve(buildFolder));
@@ -86,6 +93,7 @@ app.use(async ctx => {
     }
   }
 
+  // file or path not found in build or api will be redirected to github repo
   ctx.redirect(REPO);
 });
 
@@ -110,8 +118,8 @@ choosePort(DEFAULT_PORT).then((port) => {
       `You can now enjoy the gallery in the browser.`,
     );
     console.log();
-    console.log(`  PC:     ${GREEN}${UNDERLINED}http://localhost:${port}/${EOS}`);
-    ip && console.log(`  Mobile: ${GREEN}${UNDERLINED}http://${ip}:${port}/${EOS}`);
+    console.log(`  PC:     ${GREEN}${UNDERLINED}http://localhost:${port}/?token=${token}${EOS}`);
+    ip && console.log(`  Mobile: ${GREEN}${UNDERLINED}http://${ip}:${port}/?token=${token}${EOS}`);
     console.log();
   });
 }).catch(error => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-// import logo from './logo.svg';
 import './App.css';
 import { Gallery } from './components/Gallery'
+import fetch from './utils/fetch'
 
 function App() {
   const [isFooterVisible, setShowFooter] = useState(false);
@@ -41,8 +41,7 @@ export default App;
  */
 async function setFooterStatus(set) {
   try {
-    const resp = await window.fetch('/api/view')
-    const { isFooterVisible } = await resp.json();
+    const { isFooterVisible } = await fetch('/api/view');
 
     typeof isFooterVisible === 'boolean' && set(isFooterVisible);
   } catch (error) {
