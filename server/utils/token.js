@@ -15,5 +15,5 @@ module.exports.genToken = () => {
  * @returns {number} [start, stop]
  */
 function genRandomNumber(start, stop) {
-  return 888888;
+  return start + Math.floor(Math.random() * (stop - start + 1));
 }
