@@ -42,7 +42,7 @@ npm install gallery-server -g
    npx gallery-server --folder /path/to/images --view-footer=false
    ```
 
-2. Enjoy：open <http://localhost:6834/> in your favorite browser.
+2. Enjoy：open <http://localhost:6834/?token=${token}> in your favorite browser.
 
 ### Enjoy on PC
 
@@ -68,7 +68,8 @@ npm install gallery-server -g
 
 1. Images in your PC can be viewed in your mobile phone's browser!
 2. More than one gallery can be served at the same time.
-3. A lot of gallery features. Check it at [react-images](https://jossmac.github.io/react-images/#/accessibility).
+3. Security on privacy to prevent eavesdropping. API or image resources without a specific token is forbidden, but you can still share with your friends by sending him the token.
+4. A lot of gallery features. Check it at [react-images](https://jossmac.github.io/react-images/#/accessibility).
 
 ## Develop
 
