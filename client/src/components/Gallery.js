@@ -5,6 +5,7 @@ import PhotoWall from "react-photo-gallery";
 import './Gallery.css';
 import fetch from '../utils/fetch'
 import token from '../utils/token';
+// import { showDemoPhotos } from './demo';
 
 export const THEME_LIGHT = 'light';
 export const THEME_DARK = 'dark';
@@ -15,31 +16,8 @@ export function Gallery({ theme }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   useEffect(() => {
-    const path = '/api/images';
-    // const path = 'https://pixabay.com/api/?key=11039936-6e77e51408504e6821e3c708b&q=yosemite&image_type=photo&per_page=22';
-    fetchPhotos(path).then(photos => {
-      // console.log('urls:', urls);
-
-      // setPhotos(photos.hits.map(({ tags, downloads, webformatURL, webformatWidth, webformatHeight }) => {
-      setPhotos(photos.map(photo => {
-        // console.log('url:', url);
-        // extract the photo name from src
-        const { src } = photo;
-
-        return {
-          ...photo,
-          src: src + (src.includes('?') ? '&' : '?') + `token=${token}`,
-        };
-
-        // return {
-        //   caption: tags + '. Downloads ' + downloads,
-        //   src: webformatURL,
-
-        //   width: webformatWidth,
-        //   height: webformatHeight,
-        // };
-      }));
-    });
+    showPhotos(setPhotos);
+    // showDemoPhotos(setPhotos);
   }, []);
 
   // console.log('photos:', photos, 'selectedIndex', selectedIndex, 'modalIsOpen', modalIsOpen);
@@ -69,7 +47,7 @@ export function Gallery({ theme }) {
  *
  * @returns {Promise<string[]>}
  */
-async function fetchPhotos(path) {
+export async function fetchPhotos(path) {
   try {
     return await fetch(path);
   } catch (error) {
@@ -77,4 +55,20 @@ async function fetchPhotos(path) {
 
     return [];
   }
+}
+
+function showPhotos(setPhotos) {
+  const path = '/api/images';
+  fetchPhotos(path).then(photos => {
+    // console.log('urls:', urls);
+
+    setPhotos(photos.map(photo => {
+      const { src } = photo;
+
+      return {
+        ...photo,
+        src: src + (src.includes('?') ? '&' : '?') + `token=${token}`,
+      };
+    }));
+  });
 }
