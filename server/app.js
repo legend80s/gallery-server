@@ -118,8 +118,14 @@ choosePort(DEFAULT_PORT).then((port) => {
       `You can now enjoy the gallery in the browser.`,
     );
     console.log();
-    console.log(`  PC:     ${GREEN}${UNDERLINED}http://localhost:${port}/?token=${token}${EOS}`);
-    ip && console.log(`  Mobile: ${GREEN}${UNDERLINED}http://${ip}:${port}/?token=${token}${EOS}`);
+    console.log(`  Secret token:         ${GREEN}${token}${EOS},`,
+      `${BOLD}ONLY SHARE WITH YOUR TRUSTED FRIENDS!${EOS}`,
+    );
+    console.log('  PC:                   ' +
+      `${GREEN}${UNDERLINED}http://localhost:${port}/?token=${token}${EOS}`);
+    ip &&
+    console.log('  Mobile and Shareable: ' +
+      `${GREEN}${UNDERLINED}http://${ip}:${port}/?token=${token}${EOS}`);
     console.log();
   });
 }).catch(error => {

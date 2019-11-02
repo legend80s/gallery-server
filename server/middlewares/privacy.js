@@ -8,8 +8,6 @@ const { repository } = require('../../package.json');
  * @param {string} token
  */
 module.exports.privatize = token => {
-  console.log('token:', token);
-
   return async (ctx, next) => {
     const { url } = ctx;
 
@@ -37,8 +35,6 @@ module.exports.privatize = token => {
           message: '403 forbidden. Please redirect to ' +
             `${repository.url}#faq for more information.`,
         };
-
-        console.log('return');
 
         return;
       }
