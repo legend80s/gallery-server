@@ -106,6 +106,7 @@ Feel free to check [issues page](https://github.com/legend80s/gallery-server/iss
 - [ ] Show help Information on cli `-v` `-h`.
 - [x] Viewable on mobile.
 - [x] Adapt to mobile.
+- [ ] Image lazy load.
 
 ## Show your support
 
