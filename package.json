@@ -31,7 +31,7 @@
     "koa-static": "^5.0.0"
   },
   "devDependencies": {
-    "git-commit-msg-linter": "^2.3.8",
+    "git-commit-msg-linter": "^2.3.9",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-images": "^1.0.0",
