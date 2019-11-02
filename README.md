@@ -1,5 +1,17 @@
 # Welcome to gallery-server 👋
 
+<p>
+  <a href="https://www.npmjs.com/package/gallery-server">
+    <img src="https://img.shields.io/npm/v/gallery-server.svg" alt="npm version" />
+  </a>
+  <a href="https://www.npmjs.com/package/gallery-server">
+    <img src="https://img.shields.io/npm/dm/gallery-server.svg" alt="npm downloads" />
+  </a>
+  <a href="https://packagephobia.now.sh/result?p=commander" rel="nofollow">
+    <img src="https://packagephobia.now.sh/badge?p=gallery-server" alt="Install Size">
+  </a>
+</p>
+
 <img alt="demo-page-fullscreen" src="https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page-fullscreen.png" width="100%" />
 
 <p align="center">
