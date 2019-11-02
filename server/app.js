@@ -14,6 +14,7 @@ const { version, description, name, repository } = require('../package.json');
 const { DEFAULT_PORT } = require('../lib/constants');
 const { privatize } = require('./middlewares/privacy');
 const { genToken } = require('./utils/token');
+const isIntegerString = require('./utils/is-integer-string');
 
 const app = new Koa();
 
@@ -43,13 +44,27 @@ program
   .usage('-f <folder>')
   .option('-f, --folder <folder>', 'photos folder to serve')
   .option('-d, --directory <directory>', 'photos folder to serve')
+  .option('-p, --port <port>', 'server port')
   .option('-t, --token <token>', 'secret token to prevent eavesdropping')
   .option('--no-footer', 'hide the footer bar')
 
 program.parse(process.argv);
 // console.log('program:', program);
 
-const { folder, directory, footer: isFooterVisible, token: tokenFromCli } = program;
+const {
+  folder,
+  directory,
+  footer:
+  isFooterVisible,
+  token: tokenFromCli,
+  port: portFromCli,
+} = program;
+
+if (!isIntegerString(portFromCli)) {
+  console.error(`${RED}port "${portFromCli}" not an integer.${EOS}`);
+
+  process.exit(1);
+}
 
 const imageFolder = folder || directory;
 
@@ -112,8 +127,12 @@ function sendViewInfo(ctx) {
   };
 }
 
-choosePort(DEFAULT_PORT).then((port) => {
-  app.listen(port, () => {
+// console.log('portFromCli:', portFromCli);
+
+const port = Number(portFromCli) || DEFAULT_PORT;
+
+choosePort(port).then((availablePort) => {
+  app.listen(availablePort, () => {
     console.log(
       `Local images served from ${GREEN}${UNDERLINED}${imageFolder}${EOS}.`,
       `You can now enjoy the gallery in the browser.`,
@@ -123,24 +142,28 @@ choosePort(DEFAULT_PORT).then((port) => {
       `${BOLD}ONLY SHARE WITH YOUR TRUSTED FRIENDS!${EOS}`,
     );
     console.log('  PC:                   ' +
-      `${GREEN}${UNDERLINED}http://localhost:${port}/?token=${token}${EOS}`);
+      `${GREEN}${UNDERLINED}http://localhost:${availablePort}/?token=${token}${EOS}`);
     ip &&
     console.log('  Mobile and Shareable: ' +
-      `${GREEN}${UNDERLINED}http://${ip}:${port}/?token=${token}${EOS}`);
+      `${GREEN}${UNDERLINED}http://${ip}:${availablePort}/?token=${token}${EOS}`);
     console.log();
   });
 }).catch(error => {
   console.error('choosePort', error);
 });
 
-async function choosePort(defaultPort) {
-  const port = await detect(defaultPort);
+/**
+ * @param {number} port
+ */
+async function choosePort(port) {
+  const availablePort = await detect(port);
+  // console.log({ port, availablePort });
 
-  if (defaultPort !== port) {
-    console.log(`Port#${defaultPort} was occupied, change to ${port}.\n`);
+  if (port !== availablePort) {
+    console.log(`Port#${port} was occupied, change to ${availablePort}.\n`);
   }
 
-  return port;
+  return availablePort;
 }
 
 function getImageSrcs(folder) {
@@ -194,7 +217,7 @@ function validateFolder(folder) {
   }
 
   if (stat && !stat.isDirectory()) {
-    console.error(`${RED}"${folder}" is not a directory. ${EOS}Right example: ${GREEN}${CMD_EXAMPLE}${EOS}\n`);
+    console.error(`${RED}"${folder}" not a directory. ${EOS}Right example: ${GREEN}${CMD_EXAMPLE}${EOS}\n`);
 
     return false;
   }
