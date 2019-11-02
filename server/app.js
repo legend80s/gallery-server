@@ -60,7 +60,7 @@ const {
   port: portFromCli,
 } = program;
 
-if (!isIntegerString(portFromCli)) {
+if (portFromCli && !isIntegerString(portFromCli)) {
   console.error(`${RED}port "${portFromCli}" not an integer.${EOS}`);
 
   process.exit(1);
