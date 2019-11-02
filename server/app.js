@@ -114,13 +114,13 @@ app.use(async ctx => {
 });
 
 function sendImages(ctx) {
-  ctx.set('Access-Control-Allow-Origin', '*');
+  // ctx.set('Access-Control-Allow-Origin', '*');
 
   ctx.body = getImageSrcs(imageFolder);
 }
 
 function sendViewInfo(ctx) {
-  ctx.set('Access-Control-Allow-Origin', '*');
+  // ctx.set('Access-Control-Allow-Origin', '*');
 
   ctx.body = {
     isFooterVisible,
