@@ -46,20 +46,12 @@ npm install gallery-server -g
 
 ### Enjoy on PC
 
-![demo-page-album](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page-album.png)
-
-![demo-page-carousel](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page-carousel.png)
-
-![demo-page-fullscreen-only-image](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page-fullscreen-only-image.png)
+![demo-page-album](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page-album-2.png)
 
 ### Enjoy on Mobile
 
 <p align="center">
-  <img alt="album-mobile" src="https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/album-mobile.jpg" width="40%" />
-</p>
-
-<p align="center">
-  <img alt="gallery-mobile" src="https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/gallery-mobile.jpg" width="40%" />
+  <img alt="album-mobile" src="https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/album-mobile.jpeg" width="40%" />
 </p>
 
 *Photos from pixabay API of Yosemite.*
