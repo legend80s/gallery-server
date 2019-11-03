@@ -17,6 +17,7 @@ const { DEFAULT_PORT } = require('../lib/constants');
 const { privatize } = require('./middlewares/privacy');
 const { genToken } = require('./utils/token');
 const isIntegerString = require('./utils/is-integer-string');
+const { extractName } = require('../server/utils/file');
 
 const app = new Koa();
 
@@ -123,26 +124,20 @@ async function sendImages(ctx) {
     let dimensions = { width: 1, height: 1 };
 
     try {
-      dimensions = await sizeOf(imageFolder + src.replace(/%20/g, ' '));
+      dimensions = await sizeOf(imageFolder + '/' + src);
     } catch (error) {
       console.error(error);
     }
 
     return {
-      caption: extractCaption(src),
-      src,
+      caption: extractName(src),
+      src: `/${src.replace(/ /g, '%20')}`,
       width: dimensions.width,
       height: dimensions.height,
     };
   }));
 
   ctx.body = photos;
-}
-
-function extractCaption(src) {
-  const matches = src.match(/\/([^\s/]+)\.[^.]+$/);
-
-  return matches ? matches[1] : '';
 }
 
 function sendViewInfo(ctx) {
@@ -196,7 +191,6 @@ function getImageSrcs(folder) {
   return findAllFiles(folder)
     .map(filePath => path.relative(folder, filePath))
     .filter(filename => isImage(filename))
-    .map(filename => `/${filename.replace(/ /g, '%20')}`);
 }
 
 /**
