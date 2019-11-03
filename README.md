@@ -30,19 +30,19 @@ npm install gallery-server -g
 
 ## Use
 
-1. Serve the images.
+1. Serve the local photos.
 
    ```sh
-   gallery-server --folder /path/to/images
+   gallery-server --folder /path/to/photos
 
    # or
-   npx gallery-server --folder /path/to/images
+   npx gallery-server --folder /path/to/photos
 
    # for more usage
    gallery-server -h
    ```
 
-2. Enjoy：open <http://localhost:6834/?token=${token}> in your favorite browser.
+2. Open <http://localhost:6834/> in your favorite browser or share with your friends <http://a.b.c.d:6834/?token=${token}>.
 
 ### Enjoy on PC
 
@@ -99,7 +99,7 @@ npm run start:server
 npm run start:client
 
 # finish coding, run this cmd to build
-npm run start -- --folder /path/to/images
+npm run start -- --folder /path/to/photos
 ```
 
 ## Run tests
