@@ -18,7 +18,7 @@
   <img alt="gallery-mobile" src="https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/gallery-mobile.jpg" width="40%" />
 </p>
 
-#### **<p align="center">Beautiful Local Image Viewer</p>**
+#### **<p align="center" style="color: #cb3837;">Beautiful Local Image Viewer</p>**
 
 > Beautiful and powerful yet simple local image viewer on your PC or mobile.
 
