@@ -1,6 +1,9 @@
 const isImage = require('is-image');
+const address = require('address');
+
 const { repository } = require('../../package.json');
 
+const serverIP = address.ip();
 /**
  * Privacy middleware.
  * Only url with matched token is accessible.
@@ -11,11 +14,14 @@ module.exports.privatize = token => {
   return async (ctx, next) => {
     const { url } = ctx;
 
-    // console.log('url:', url);
+    const clientIP = ctx.ip;
+    // console.log('clientIP:', clientIP);
 
+    /** Request is from the owner no need to validate the token */
+    const isOwnerRequest = clientIP === '127.0.0.1' || clientIP === serverIP;
     const isFaviconReq = '/favicon.ico' === url;
 
-    if (!token || isFaviconReq) {
+    if (isOwnerRequest || !token || isFaviconReq) {
       return await next();
     }
 

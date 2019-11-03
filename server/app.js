@@ -181,7 +181,7 @@ function sendViewInfo(ctx) {
 const port = Number(portFromCli) || DEFAULT_PORT;
 
 choosePort(port).then((availablePort) => {
-  app.listen(availablePort, () => {
+  app.listen(availablePort, '0.0.0.0', () => {
     console.log(
       `Local images served from ${GREEN}${UNDERLINED}${mediaFolder}${EOS}.`,
       `You can now enjoy the gallery in the browser.`,
@@ -191,7 +191,7 @@ choosePort(port).then((availablePort) => {
       `${BOLD}ONLY SHARE WITH YOUR TRUSTED FRIENDS!${EOS}`,
     );
     console.log('  PC:                   ' +
-      `${GREEN}${UNDERLINED}http://localhost:${availablePort}/?token=${token}${EOS}`);
+      `${GREEN}${UNDERLINED}http://localhost:${availablePort}/${EOS}`);
     ip &&
     console.log('  Mobile and Shareable: ' +
       `${GREEN}${UNDERLINED}http://${ip}:${availablePort}/?token=${token}${EOS}`);
