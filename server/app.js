@@ -5,6 +5,7 @@ const serve = require('koa-static');
 const path = require('path');
 const fs = require('fs');
 const isImage = require('is-image');
+const isVideo = require('is-video');
 const address = require('address');
 const boxen = require('boxen');
 const detect = require('detect-port');
@@ -69,9 +70,10 @@ if (portFromCli && !isIntegerString(portFromCli)) {
   process.exit(1);
 }
 
-const imageFolder = folder || directory;
+/** @type {string} */
+const mediaFolder = folder || directory;
 
-if (!validateFolder(imageFolder)) { process.exit(1); }
+if (!validateFolder(mediaFolder)) { process.exit(1); }
 
 const buildFolder = path.resolve(__dirname, '../client/build');
 
@@ -82,7 +84,7 @@ const token = tokenFromCli || genToken();
 // add privacy middleware
 app.use(privatize(token));
 
-app.use(serve(imageFolder));
+app.use(serve(mediaFolder));
 app.use(serve(buildFolder));
 
 // logger
@@ -103,8 +105,20 @@ app.use(async (ctx, next) => {
 
 app.use(async ctx => {
   if (ctx.method === 'GET') {
+    if (ctx.path.startsWith('/api/')) {
+      ctx.set('Access-Control-Allow-Origin', '*');
+    }
+
     if (ctx.path === '/api/images') {
-      return sendImages(ctx);
+      const photos = getRelativeFiles(mediaFolder, isImage);
+
+      return sendPhotos(ctx, photos);
+    }
+
+    if (ctx.path === '/api/videos') {
+      const videos = getRelativeFiles(mediaFolder, isVideo);
+
+      return sendVideos(ctx, videos);
     }
 
     if (ctx.path === '/api/view') {
@@ -116,22 +130,19 @@ app.use(async ctx => {
   ctx.redirect(REPO);
 });
 
-async function sendImages(ctx) {
-  ctx.set('Access-Control-Allow-Origin', '*');
-  const srcs = getImageSrcs(imageFolder);
-
-  const photos = await Promise.all(srcs.map(async src => {
+async function sendPhotos(ctx, photoPaths) {
+  const photos = await Promise.all(photoPaths.map(async src => {
     let dimensions = { width: 1, height: 1 };
 
     try {
-      dimensions = await sizeOf(imageFolder + '/' + src);
+      dimensions = await sizeOf(mediaFolder + '/' + src);
     } catch (error) {
       console.error(error);
     }
 
     return {
-      caption: extractName(src),
-      src: `/${src.replace(/ /g, '%20')}`,
+      ...normalizePath(src),
+
       width: dimensions.width,
       height: dimensions.height,
     };
@@ -140,9 +151,26 @@ async function sendImages(ctx) {
   ctx.body = photos;
 }
 
-function sendViewInfo(ctx) {
-  ctx.set('Access-Control-Allow-Origin', '*');
+/**
+ *
+ * @param {any} ctx
+ * @param {string[]} videoPaths
+ */
+function sendVideos(ctx, videoPaths) {
+  const videos = videoPaths.map(normalizePath);
 
+  ctx.body = videos;
+}
+
+
+function normalizePath(path) {
+  return {
+    caption: extractName(path),
+    src: `/${path.replace(/ /g, '%20').replace(/#/g, '%23')}`,
+  };
+}
+
+function sendViewInfo(ctx) {
   ctx.body = {
     isFooterVisible,
   };
@@ -155,7 +183,7 @@ const port = Number(portFromCli) || DEFAULT_PORT;
 choosePort(port).then((availablePort) => {
   app.listen(availablePort, () => {
     console.log(
-      `Local images served from ${GREEN}${UNDERLINED}${imageFolder}${EOS}.`,
+      `Local images served from ${GREEN}${UNDERLINED}${mediaFolder}${EOS}.`,
       `You can now enjoy the gallery in the browser.`,
     );
     console.log();
@@ -187,19 +215,19 @@ async function choosePort(port) {
   return availablePort;
 }
 
-function getImageSrcs(folder) {
-  return findAllFiles(folder)
+function getRelativeFiles(folder, predicate) {
+  return findAllFiles(folder, predicate)
     .map(filePath => path.relative(folder, filePath))
-    .filter(filename => isImage(filename))
 }
 
 /**
  * Find all the files in the target folder recursively.
  * @param {string} folder directory
+ * @param {(path: string) => boolean} predicate directory ignored
  * @param {string} excludedFolder directory ignored
  * @returns {string[]} file paths
  */
-function findAllFiles(folder, excludedFolder = 'node_modules') {
+function findAllFiles(folder, predicate = () => true, excludedFolder = 'node_modules') {
   return fs.readdirSync(folder).reduce((acc, cur) => {
     // console.log('folder', folder, 'cur:', cur);
 
@@ -210,9 +238,9 @@ function findAllFiles(folder, excludedFolder = 'node_modules') {
     const filePath = path.join(folder, cur);
 
     if (fs.statSync(filePath).isDirectory()) {
-      acc.push(...findAllFiles(filePath));
+      acc.push(...findAllFiles(filePath, predicate));
     } else {
-      acc.push(filePath);
+      predicate(filePath) && acc.push(filePath);
     }
 
     return acc;
