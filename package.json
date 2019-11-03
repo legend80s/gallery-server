@@ -43,7 +43,7 @@
     "react-toggle": "^4.1.1"
   },
   "scripts": {
-    "prestart": "npm run build:client",
+    "prestart": "npm test && npm run build:client",
     "start": "node server/app.js",
     "start:server": "node server/app.js",
     "prepublish": "npm run clean && npm run build:client",
