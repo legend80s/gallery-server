@@ -11,7 +11,9 @@ export function CinemaHall({ theme }) {
     showVideos(setVideos);
   }, []);
 
-  return (
+  return (<>
+    { videos.length ? <hr/> : null }
+
     <ul className={ `video-list ${theme}` }>
       {videos.map(({ src, caption }, index) => {
         return <li key={src}>
@@ -19,7 +21,7 @@ export function CinemaHall({ theme }) {
         </li>
       })}
     </ul>
-  );
+  </>);
 }
 
 function showVideos(setVideos) {

@@ -35,11 +35,11 @@ export function Gallery({ theme }) {
         </Modal>
     </ModalGateway>}
 
-    {photos.length && <PhotoWall
+    {photos.length ? <PhotoWall
       photos={photos}
       direction={'row'}
       onClick={(_, { index }) => toggleModal(index)}
-    />}
+    /> : null}
   </div>);
 }
 

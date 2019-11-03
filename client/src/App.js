@@ -23,7 +23,6 @@ function App() {
     <div className="App">
       <main className={ `main ${theme}` }>
         <Gallery theme={theme} />
-        <hr/>
         <CinemaHall theme={theme} />
       </main>
 
