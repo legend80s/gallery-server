@@ -66,11 +66,12 @@ npm install gallery-server -g
 
 ## Features
 
-1. Images in your PC can be viewed in your mobile phone's browser!
-3. Security on privacy to prevent eavesdropping. API or image resources without a specific token is forbidden, but you can still share with your friends by sending him the token.
+1. Photos in your PC can be viewed in your mobile phone's browser!
+2. Security on privacy to prevent eavesdropping. API or image resources without a specific token is forbidden, but you can still share with your friends by sending him the token.
 3. Theme togglable between light and dark.
-4. More than one gallery can be served at the same time.
-5. A lot of gallery features. Check it at [react-images](https://jossmac.github.io/react-images/#/accessibility).
+4. Videos also supported!
+5. More than one galleries can be served at the same time.
+6. A lot of gallery features. Check it at [react-images](https://jossmac.github.io/react-images/#/accessibility).
 
 ## FAQ
 
@@ -140,6 +141,7 @@ Feel free to check [issues page](https://github.com/legend80s/gallery-server/iss
 - [x] Port customizable.
 - [x] Token customizable.
 - [x] Serve multiple folders in one cmd.
+- [ ] Token can be optional when viewed on owner's browers.
 
 ## Show your support
 

@@ -17,6 +17,14 @@
   width: 100%;
 }
 
+.main {
+  padding: 0.2% 6% 76px;
+}
+
+.main.dark {
+  background-color: #333;
+}
+
 .App-footer .toggle-wrapper {
   width: 100%;
   display: flex;
@@ -35,4 +43,11 @@
 
 .App-link {
   color: #09d3ac;
+}
+
+@media screen and (max-width: 600px) {
+  .main {
+    padding-left: 0.3vw;
+    padding-right: 0.3vw;
+  }
 }

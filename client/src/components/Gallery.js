@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Carousel, { Modal, ModalGateway } from 'react-images';
 import PhotoWall from "react-photo-gallery";
 
-import './Gallery.css';
 import fetch from '../utils/fetch'
 import token from '../utils/token';
-// import { showDemoPhotos } from './demo';
+// import { showDemoPhotos } from './gallery-from-demo-api';
+
+import './Gallery.css';
 
 export const THEME_LIGHT = 'light';
 export const THEME_DARK = 'dark';

@@ -5,6 +5,7 @@ import fetch from './utils/fetch'
 
 import './App.css';
 import "react-toggle/style.css";
+import { CinemaHall } from './components/CinemaHall';
 
 function App() {
   const [isFooterVisible, setShowFooter] = useState(false);
@@ -20,7 +21,11 @@ function App() {
 
   return (
     <div className="App">
-      <Gallery theme={theme} />
+      <main className={ `main ${theme}` }>
+        <Gallery theme={theme} />
+        <hr/>
+        <CinemaHall theme={theme} />
+      </main>
 
       {isFooterVisible && <footer className="App-footer">
         <div className="toggle-wrapper">

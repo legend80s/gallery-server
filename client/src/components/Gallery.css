@@ -1,11 +1,3 @@
-.gallery {
-  padding: 0.2% 6% 76px;
-}
-
-.gallery.dark {
-  background-color: #333;
-}
-
 .gallery img {
   background-color: white;
   border-radius: 0.2vw;
@@ -15,9 +7,3 @@
   opacity: 0.9;
 }
 
-@media screen and (max-width: 600px) {
-  .gallery {
-    padding-left: 0.3vw;
-    padding-right: 0.3vw;
-  }
-}
