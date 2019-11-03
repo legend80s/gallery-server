@@ -76,9 +76,9 @@ npm install gallery-server -g
    }
    ```
 
-   - A: Add token to the resource url if you are the gallery owner otherwise ask the owner for the token.
+   - A: You see this message because you are not the gallery owner. Ask the owner for the token and append it to the resource URL.
 
-2. Photos in node_modules will be ignored for the performance.
+2. Photos in node_modules will be ignored for performance.
 
 ## Develop
 
