@@ -134,6 +134,7 @@ Feel free to check [issues page](https://github.com/legend80s/gallery-server/iss
 - [x] Token customizable.
 - [x] Serve multiple folders in one cmd.
 - [x] Token can be optional when viewed on owner's brower.
+- [ ] Electron App.
 
 ## Show your support
 
