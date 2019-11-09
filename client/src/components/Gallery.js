@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+// https://github.com/jossmac/react-images
 import Carousel, { Modal, ModalGateway } from 'react-images';
 import PhotoWall from "react-photo-gallery";
 
