@@ -82,9 +82,21 @@ npx gallery-server -h
 
 ## Develop
 
-Install all the dependencies into `./package.json`'s devDependencies not `./client/package.json`. The package.json in `client` exits only for `scripts`。
+1. start api server
 
-For example if you want change to another gallery:
+```sh
+npm run dev:server -- --folder=/path/to/photos
+```
+
+2. start webpack devServer
+
+```sh
+npm run dev:client
+```
+
+Notice: Install all the dependencies into `./package.json`'s devDependencies not `./client/package.json`. The package.json in `client` exits only for `scripts`。
+
+For example if you want change to another gallery (react-bnb-gallery):
 
 ```sh
 # enter project root not ./client/
@@ -93,13 +105,16 @@ cd project_root
 npm install --save-dev react-bnb-gallery
 
 # start api server
-npm run start:server
+npm run dev:server -- --folder=/path/to/photos
 
 # start webpack devServer
-npm run start:client
+npm run dev:client
+```
 
-# finish coding, run this cmd to build
-npm run start -- --folder /path/to/photos
+## Publish
+
+```sh
+npm version patch / minor / major
 ```
 
 ## Run tests
