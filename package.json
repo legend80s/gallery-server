@@ -33,7 +33,7 @@
     "koa-static": "^5.0.0"
   },
   "devDependencies": {
-    "git-commit-msg-linter": "^2.3.9",
+    "git-commit-msg-linter": "^2.7.0",
     "mocha": "^6.2.2",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
@@ -46,7 +46,8 @@
     "prestart": "npm test && npm run build:client",
     "start": "node server/app.js",
     "start:server": "node server/app.js",
-    "prepublish": "npm run clean && npm run build:client",
+    "preversion": "npm test && npm run clean && npm run build:client",
+    "postversion": "npm publish && git push && git push --tags",
     "clean": "rm -rf ./client/build/",
     "build:client": "cd client && npm run build",
     "start:client": "cd client && npm run start",
