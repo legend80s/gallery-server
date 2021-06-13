@@ -37,20 +37,20 @@
     "mocha": "^6.2.2",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
-    "react-images": "^1.0.0",
+    "react-images": "^1.2.0-beta.7",
     "react-photo-gallery": "^8.0.0",
     "react-scripts": "3.2.0",
     "react-toggle": "^4.1.1"
   },
   "scripts": {
-    "prestart": "npm test && npm run build:client",
-    "start": "node server/app.js",
-    "start:server": "node server/app.js",
+    "dev:server": "node server/app.js",
+    "dev:client": "cd client && npm run start",
+
     "preversion": "npm test && npm run clean && npm run build:client",
     "postversion": "npm publish && git push && git push --tags",
     "clean": "rm -rf ./client/build/",
     "build:client": "cd client && npm run build",
-    "start:client": "cd client && npm run start",
+
     "test": "mocha"
   },
   "bin": {
