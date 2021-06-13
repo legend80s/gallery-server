@@ -1,6 +1,6 @@
 {
   "name": "gallery-server",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "Beautiful and powerful yet simple local image viewer on your PC or mobile.",
   "keywords": [
     "beautiful",
@@ -45,12 +45,10 @@
   "scripts": {
     "dev:server": "node server/app.js",
     "dev:client": "cd client && npm run start",
-
     "preversion": "npm test && npm run clean && npm run build:client",
     "postversion": "npm publish && git push && git push --tags",
     "clean": "rm -rf ./client/build/",
     "build:client": "cd client && npm run build",
-
     "test": "mocha"
   },
   "bin": {
