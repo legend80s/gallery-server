@@ -33,7 +33,7 @@
     "koa-static": "^5.0.0"
   },
   "devDependencies": {
-    "git-commit-msg-linter": "^2.7.0",
+    "git-commit-msg-linter": "^3.2.6",
     "mocha": "^6.2.2",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
