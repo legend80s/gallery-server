@@ -10,6 +10,9 @@
   <a href="https://bundlephobia.com/result?p=gallery-server">
     <img src="https://flat.badgen.net/bundlephobia/minzip/gallery-server" alt="Minified + gzip package size for gallery-server in KB">
   </a>
+  <a href="https://www.npmjs.com/package/git-commit-msg-linter">
+    <img src="https://badgen.net/badge/git-commit-msg-linter/3.2.5/green" alt="commit msg linted by git-commit-msg-linter" />
+  </a>
 </p>
 
 <img alt="demo-page-fullscreen" src="https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page-fullscreen.png" width="100%" />
