@@ -33,16 +33,13 @@ No installment required!
 1. Serve the local photos.
 
 ```sh
-gallery-server --folder /path/to/photos
-
-# or
 npx gallery-server --folder /path/to/photos
 
 # for more usage
-gallery-server -h
+npx gallery-server -h
 ```
 
-2. Open <http://localhost:6834/> in your favorite browser or share with your friends <http://a.b.c.d:6834/?token=${token}>.
+2. Open <http://localhost:xxxx/> in your favorite browser or share with your friends <http://a.b.c.d:xxxx/?token=${token}>.
 
 ### Enjoy on PC
 
