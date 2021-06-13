@@ -22,25 +22,25 @@
 
 > Beautiful and powerful yet simple local image viewer on your PC or mobile.
 
+[中文版文档](https://juejin.cn/post/6973163233008058405/)
+
 ## Install
 
-```sh
-npm install gallery-server -g
-```
+No installment required!
 
 ## Use
 
 1. Serve the local photos.
 
-   ```sh
-   gallery-server --folder /path/to/photos
+```sh
+gallery-server --folder /path/to/photos
 
-   # or
-   npx gallery-server --folder /path/to/photos
+# or
+npx gallery-server --folder /path/to/photos
 
-   # for more usage
-   gallery-server -h
-   ```
+# for more usage
+gallery-server -h
+```
 
 2. Open <http://localhost:6834/> in your favorite browser or share with your friends <http://a.b.c.d:6834/?token=${token}>.
 
