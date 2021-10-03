@@ -12,7 +12,7 @@ import './Gallery.css';
 export const THEME_LIGHT = 'light';
 export const THEME_DARK = 'dark';
 
-export function Gallery({ theme }) {
+export function Gallery({ theme, direction }) {
   const [photos, setPhotos] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -38,7 +38,7 @@ export function Gallery({ theme }) {
 
     {photos.length ? <PhotoWall
       photos={photos}
-      direction={'row'}
+      direction={direction}
       onClick={(_, { index }) => toggleModal(index)}
     /> : null}
   </div>);

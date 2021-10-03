@@ -9,10 +9,11 @@ import { CinemaHall } from './components/CinemaHall';
 
 function App() {
   const [isFooterVisible, setShowFooter] = useState(false);
+  const [direction, setDirection] = useState('row');
   const [theme, setTheme] = useState(THEME_LIGHT);
 
   useEffect(() => {
-    setFooterStatus(setShowFooter);
+    setViewOptions(setShowFooter, setDirection);
   }, []);
 
   const toggleTheme = () => {
@@ -22,7 +23,7 @@ function App() {
   return (
     <div className="App">
       <main className={ `main ${theme}` }>
-        <Gallery theme={theme} />
+        <Gallery theme={theme} direction={direction}/>
         <CinemaHall theme={theme} />
       </main>
 
@@ -59,11 +60,13 @@ export default App;
 /**
  * @returns {Promise<void>}
  */
-async function setFooterStatus(set) {
+async function setViewOptions(setFooterVisible, setDirection) {
   try {
-    const { isFooterVisible } = await fetch('/api/view');
+    const { isFooterVisible, isColumnLayout } = await fetch('/api/view');
+    const direction = isColumnLayout ? 'column' : 'row';
 
-    typeof isFooterVisible === 'boolean' && set(isFooterVisible);
+    typeof isFooterVisible === 'boolean' && setFooterVisible(isFooterVisible);
+    typeof isColumnLayout === 'boolean' && setDirection(direction);
   } catch (error) {
     return console.error('fetchImages', error);
   }
