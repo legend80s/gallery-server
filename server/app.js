@@ -132,19 +132,20 @@ app.use(async ctx => {
 
 async function sendPhotos(ctx, photoPaths) {
   const photos = await Promise.all(photoPaths.map(async src => {
-    let dimensions = { width: 1, height: 1 };
+    let dimensions = { width: 1, height: 1, orientation: 1 };
 
     try {
       dimensions = await sizeOf(mediaFolder + '/' + src);
     } catch (error) {
       console.error(error);
     }
+    const { width, height, orientation } = dimensions;
+    const isVertical = orientation === 6;
 
     return {
       ...normalizePath(src),
-
-      width: dimensions.width,
-      height: dimensions.height,
+      width: isVertical ? height : width,
+      height: isVertical ? width : height,
     };
   }));
 
