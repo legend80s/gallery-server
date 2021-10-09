@@ -48,6 +48,7 @@ program
   .usage('-f <folder>')
   .option('-f, --folder <folder>', 'photos folder to serve')
   .option('-d, --directory <directory>', 'photos folder to serve')
+  .option('-c, --column', 'use column layout')
   .option('-p, --port <port>', 'server port')
   .option('-t, --token <token>', 'secret token to prevent eavesdropping')
   .option('--no-footer', 'hide the footer bar')
@@ -58,8 +59,8 @@ program.parse(process.argv);
 const {
   folder,
   directory,
-  footer:
-  isFooterVisible,
+  column: isColumnLayout,
+  footer: isFooterVisible,
   token: tokenFromCli,
   port: portFromCli,
 } = program;
@@ -173,6 +174,7 @@ function normalizePath(path) {
 
 function sendViewInfo(ctx) {
   ctx.body = {
+    isColumnLayout,
     isFooterVisible,
   };
 }
