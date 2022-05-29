@@ -13,6 +13,7 @@
   <a href="https://www.npmjs.com/package/git-commit-msg-linter">
     <img src="https://badgen.net/badge/git-commit-msg-linter/3.2.5/green" alt="commit msg linted by git-commit-msg-linter" />
   </a>
+  <img src="https://visitor-badge.glitch.me/badge?page_id=legend80s/gallery-server&left_color=blue&right_color=green" alt="visitor count" />
 </p>
 
 <img alt="demo-page-fullscreen" src="https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page-fullscreen.png" width="100%" />
