@@ -1,4 +1,4 @@
-# Welcome to gallery-server 👋
+<h1 align="center">gallery-server 🖼️</h1>
 
 <p>
   <a href="https://www.npmjs.com/package/gallery-server">
@@ -28,11 +28,11 @@
 
 [中文版文档](https://juejin.cn/post/6973163233008058405/)
 
-## Install
+## Install 🆓
 
 No installment required!
 
-## Use
+## Use 🌱
 
 1. Serve the local photos.
 
@@ -43,13 +43,13 @@ npx gallery-server --folder /path/to/photos
 npx gallery-server -h
 ```
 
-2. Open <http://localhost:xxxx/> in your favorite browser or share with your friends <http://a.b.c.d:xxxx/?token=${token}>.
+2. Open <http://localhost:xxxx/> in your favorite browser or share with your friends <http://a.b.c.d:xxxx?token=${token}>.
 
-### Enjoy on PC
+### Enjoy on PC 💻
 
 ![demo-page-album](https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/demo-page-album-2.png)
 
-### Enjoy on Mobile
+### Enjoy on Mobile Phone 📱
 
 <p align="center">
   <img alt="album-mobile" src="https://raw.githubusercontent.com/legend80s/gallery-server/master/assets/album-mobile.jpeg" width="40%" />
@@ -57,16 +57,16 @@ npx gallery-server -h
 
 *Photos from pixabay API of Yosemite.*
 
-## Features
+## Features 🌟
 
-1. Photos in your PC can be viewed in your mobile phone's browser!
-2. Security on privacy to prevent eavesdropping. API or image resources without a specific token is forbidden, but you can still share with your friends by sending him the token.
-3. Theme togglable between light and dark.
-4. Videos also supported!
-5. More than one galleries can be served at the same time.
-6. A lot of gallery features. Check it at [react-images](https://jossmac.github.io/react-images/#/accessibility).
+1. 📱 Photos in your PC can be viewed in your mobile phone's browser! So your can download photos on your PC to mobile phone.
+2. 🔐 Security on privacy to prevent eavesdropping. API or images without token are forbidden, but you can still share with your friends by sending him the token.
+3. 🎭 Light and dark theme.
+4. 🎞️ Videos also supported!
+5. 🖼️ More than one galleries can be served at the same time.
+6. 📚 A lot of gallery features. Check it at [react-images](https://jossmac.github.io/react-images/#/accessibility).
 
-## FAQ
+## FAQ 🙋‍♂️
 
 1. Q: Why `403 forbidden`？
 
@@ -81,7 +81,7 @@ npx gallery-server -h
 
 2. Photos in node_modules will be ignored for performance.
 
-## Develop
+## Develop 👨‍💻
 
 1. start api server
 
@@ -112,23 +112,23 @@ npm run dev:server -- --folder=/path/to/photos
 npm run dev:client
 ```
 
-## Publish
+## Publish 📦
 
 ```sh
 npm version patch / minor / major
 ```
 
-## Run tests
+## Run tests 🧪
 
 ```sh
 npm run test
 ```
 
-## Author
+## Author 👤
 
 👤 **legend80s**
 
-* Github: [@legend80s](https://github.com/legend80s)
+- Github: [@legend80s](https://github.com/legend80s)
 
 ## 🤝 Contributing
 
@@ -136,7 +136,7 @@ Contributions, issues and feature requests are welcome!
 
 Feel free to check [issues page](https://github.com/legend80s/gallery-server/issues).
 
-## Todo
+## Todos ☑️
 
 - [x] Any port. use unoccupied port.
 - [ ] Build with remote client to support a wide range of client gallery.
@@ -152,9 +152,9 @@ Feel free to check [issues page](https://github.com/legend80s/gallery-server/iss
 - [x] Token can be optional when viewed on owner's brower.
 - [ ] Electron App.
 
-## Show your support
+## Show your support ⭐️
 
 Give a ⭐️ if this project helped you!
 
 ***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
+*This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)*
