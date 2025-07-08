@@ -1,9 +1,0 @@
-.gallery img {
-  background-color: white;
-  border-radius: 0.2vw;
-}
-
-.gallery img:hover {
-  opacity: 0.9;
-}
-
