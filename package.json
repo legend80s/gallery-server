@@ -33,6 +33,7 @@
     "koa-static": "^5.0.0"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "git-commit-msg-linter": "^3.2.6",
     "mocha": "^6.2.2",
     "react": "^16.11.0",
@@ -43,8 +44,12 @@
     "react-toggle": "^4.1.1"
   },
   "scripts": {
+    "dev:client": "cd client && cross-env NODE_OPTIONS=--openssl-legacy-provider npm run start",
     "dev:server": "node server/app.js",
-    "dev:client": "cd client && npm run start",
+    "// --- alias for dev:client": "---",
+    "dc": "npm run dev:client",
+    "// --- alias for dev:server": "---",
+    "ds": "node server/app.js",
     "preversion": "npm test && npm run clean && npm run build:client",
     "postversion": "npm publish && git push && git push --tags",
     "clean": "rm -rf ./client/build/",

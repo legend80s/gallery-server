@@ -4,18 +4,20 @@ const address = require('address');
 const { repository } = require('../../package.json');
 
 const serverIP = address.ip();
+
 /**
  * Privacy middleware.
  * Only url with matched token is accessible.
  *
  * @param {string} token
  */
-module.exports.privatize = token => {
+module.exports.privatize = (token) => {
   return async (ctx, next) => {
     const { url } = ctx;
 
     const clientIP = ctx.ip;
-    // console.log('clientIP:', clientIP);
+    // console.log("clientIP:", clientIP);
+    // console.log("serverIP:", serverIP);
 
     /** Request is from the owner no need to validate the token */
     const isOwnerRequest = clientIP === '127.0.0.1' || clientIP === serverIP;
@@ -38,7 +40,8 @@ module.exports.privatize = token => {
         ctx.status = 403;
         ctx.body = {
           code: 403,
-          message: 'Forbidden. `token` required. Please redirect to ' +
+          message:
+            'Forbidden. `token` required. Please redirect to ' +
             `${repository.url}#faq for more information.`,
         };
 

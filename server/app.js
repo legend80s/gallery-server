@@ -25,20 +25,22 @@ const app = new Koa();
 const YELLOW = '\x1b[1;33m';
 const RED = '\x1b[0;31m';
 const GREEN = '\x1b[0;32m';
-const GRAY = '\x1b[0;37m';
 const UNDERLINED = '\x1b[4m';
 const BOLD = '\x1b[1m';
 const ITALIC = '\x1b[3m';
+// End Of Style
 const EOS = '\x1b[0m';
+
+const warn = (...args) => console.warn(`${YELLOW}[WARN]`, ...args, EOS);
 
 const ip = address.ip();
 const REPO = repository.url;
 
 console.info(
-  boxen(
-    `${BOLD}${ITALIC}gallery-server@${version}\ngithub: ${REPO}${EOS}`,
-    { margin: 1, padding: { top: 1, right: 1, bottom: 1, left: 1 }, },
-  ),
+  boxen(`${BOLD}${ITALIC}gallery-server@${version}\ngithub: ${REPO}${EOS}`, {
+    margin: 1,
+    padding: { top: 1, right: 1, bottom: 1, left: 1 },
+  })
 );
 
 program
@@ -51,7 +53,7 @@ program
   .option('-c, --column', 'use column layout')
   .option('-p, --port <port>', 'server port')
   .option('-t, --token <token>', 'secret token to prevent eavesdropping')
-  .option('--no-footer', 'hide the footer bar')
+  .option('--no-footer', 'hide the footer bar');
 
 program.parse(process.argv);
 // console.log('program:', program);
@@ -74,7 +76,9 @@ if (portFromCli && !isIntegerString(portFromCli)) {
 /** @type {string} */
 const mediaFolder = folder || directory;
 
-if (!validateFolder(mediaFolder)) { process.exit(1); }
+if (!validateFolder(mediaFolder)) {
+  process.exit(1);
+}
 
 const buildFolder = path.resolve(__dirname, '../client/build');
 
@@ -104,7 +108,7 @@ app.use(async (ctx, next) => {
   ctx.set('X-Response-Time', `${ms}ms`);
 });
 
-app.use(async ctx => {
+app.use(async (ctx) => {
   if (ctx.method === 'GET') {
     if (ctx.path.startsWith('/api/')) {
       ctx.set('Access-Control-Allow-Origin', '*');
@@ -128,27 +132,32 @@ app.use(async ctx => {
   }
 
   // file or path not found in build or api will be redirected to github repo
+  warn(
+    `Path not implemented redirect to github repo (${REPO}). Make sure \`client:dev\` has been run.`
+  );
   ctx.redirect(REPO);
 });
 
 async function sendPhotos(ctx, photoPaths) {
-  const photos = await Promise.all(photoPaths.map(async src => {
-    let dimensions = { width: 1, height: 1, orientation: 1 };
+  const photos = await Promise.all(
+    photoPaths.map(async (src) => {
+      let dimensions = { width: 1, height: 1, orientation: 1 };
 
-    try {
-      dimensions = await sizeOf(mediaFolder + '/' + src);
-    } catch (error) {
-      console.error(error);
-    }
-    const { width, height, orientation } = dimensions;
-    const isVertical = orientation === 6;
+      try {
+        dimensions = await sizeOf(mediaFolder + '/' + src);
+      } catch (error) {
+        console.error(error);
+      }
+      const { width, height, orientation } = dimensions;
+      const isVertical = orientation === 6;
 
-    return {
-      ...normalizePath(src),
-      width: isVertical ? height : width,
-      height: isVertical ? width : height,
-    };
-  }));
+      return {
+        ...normalizePath(src),
+        width: isVertical ? height : width,
+        height: isVertical ? width : height,
+      };
+    })
+  );
 
   ctx.body = photos;
 }
@@ -163,7 +172,6 @@ function sendVideos(ctx, videoPaths) {
 
   ctx.body = videos;
 }
-
 
 function normalizePath(path) {
   return {
@@ -183,26 +191,33 @@ function sendViewInfo(ctx) {
 
 const port = Number(portFromCli) || DEFAULT_PORT;
 
-choosePort(port).then((availablePort) => {
-  app.listen(availablePort, '0.0.0.0', () => {
-    console.log(
-      `Local images served from ${GREEN}${UNDERLINED}${mediaFolder}${EOS}.`,
-      `You can now enjoy the gallery in the browser.`,
-    );
-    console.log();
-    console.log(`  Secret token:         ${GREEN}${token}${EOS},`,
-      `${BOLD}ONLY SHARE WITH YOUR TRUSTED FRIENDS!${EOS}`,
-    );
-    console.log('  PC:                   ' +
-      `${GREEN}${UNDERLINED}http://localhost:${availablePort}/${EOS}`);
-    ip &&
-    console.log('  Mobile and Shareable: ' +
-      `${GREEN}${UNDERLINED}http://${ip}:${availablePort}/?token=${token}${EOS}`);
-    console.log();
+choosePort(port)
+  .then((availablePort) => {
+    app.listen(availablePort, '0.0.0.0', () => {
+      console.log(
+        `Local images served from ${GREEN}${UNDERLINED}${mediaFolder}${EOS}.`,
+        `You can now enjoy the gallery in the browser.`
+      );
+      console.log();
+      console.log(
+        `  Secret token:         ${GREEN}${token}${EOS},`,
+        `${BOLD}ONLY SHARE WITH YOUR TRUSTED FRIENDS!${EOS}`
+      );
+      console.log(
+        '  PC:                   ' +
+          `${GREEN}${UNDERLINED}http://localhost:${availablePort}/${EOS}`
+      );
+      ip &&
+        console.log(
+          '  Mobile and Shareable: ' +
+            `${GREEN}${UNDERLINED}http://${ip}:${availablePort}/?token=${token}${EOS}`
+        );
+      console.log();
+    });
+  })
+  .catch((error) => {
+    console.error('choosePort', error);
   });
-}).catch(error => {
-  console.error('choosePort', error);
-});
 
 /**
  * @param {number} port
@@ -219,8 +234,9 @@ async function choosePort(port) {
 }
 
 function getRelativeFiles(folder, predicate) {
-  return findAllFiles(folder, predicate)
-    .map(filePath => path.relative(folder, filePath))
+  return findAllFiles(folder, predicate).map((filePath) =>
+    path.relative(folder, filePath)
+  );
 }
 
 /**
@@ -230,7 +246,11 @@ function getRelativeFiles(folder, predicate) {
  * @param {string} excludedFolder directory ignored
  * @returns {string[]} file paths
  */
-function findAllFiles(folder, predicate = () => true, excludedFolder = 'node_modules') {
+function findAllFiles(
+  folder,
+  predicate = () => true,
+  excludedFolder = 'node_modules'
+) {
   return fs.readdirSync(folder).reduce((acc, cur) => {
     // console.log('folder', folder, 'cur:', cur);
 
@@ -262,13 +282,17 @@ function validateFolder(folder) {
   try {
     stat = fs.lstatSync(folder);
   } catch (error) {
-    console.error(`${RED}folder "${folder}" not exists. ${EOS}Right example: ${GREEN}${CMD_EXAMPLE}${EOS}\n`);
+    console.error(
+      `${RED}folder "${folder}" not exists. ${EOS}Right example: ${GREEN}${CMD_EXAMPLE}${EOS}\n`
+    );
 
     return false;
   }
 
   if (stat && !stat.isDirectory()) {
-    console.error(`${RED}"${folder}" not a directory. ${EOS}Right example: ${GREEN}${CMD_EXAMPLE}${EOS}\n`);
+    console.error(
+      `${RED}"${folder}" not a directory. ${EOS}Right example: ${GREEN}${CMD_EXAMPLE}${EOS}\n`
+    );
 
     return false;
   }

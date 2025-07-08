@@ -37,6 +37,13 @@ No installment required!
 1. Serve the local photos.
 
 ```sh
+bunx gallery-server --folder /path/to/photos
+```
+
+or:
+
+```sh
+pnpx gallery-server --folder /path/to/photos
 npx gallery-server --folder /path/to/photos
 
 # for more usage
@@ -66,6 +73,11 @@ npx gallery-server -h
 5. 🖼️ More than one galleries can be served at the same time.
 6. 📚 A lot of gallery features. Check it at [react-images](https://jossmac.github.io/react-images/#/accessibility).
 
+### Technical features
+
+- It is both a server and a client application, as well as a command-line application!
+- Tech stack: Prettier, ...
+
 ## FAQ 🙋‍♂️
 
 1. Q: Why `403 forbidden`？
@@ -83,16 +95,24 @@ npx gallery-server -h
 
 ## Develop 👨‍💻
 
-1. start api server
+1. install
 
 ```sh
-npm run dev:server -- --folder=/path/to/photos
+pnpm i
 ```
 
-2. start webpack devServer
+2. start api server
 
 ```sh
-npm run dev:client
+pnpm dev:server --folder='/path/to/photos'
+# pnpm ds --folder='/path/to/photos'
+```
+
+3. start webpack devServer
+
+```sh
+pnpm dev:client
+# pnpm dc
 ```
 
 Notice: Install all the dependencies into `./package.json`'s devDependencies not `./client/package.json`. The package.json in `client` exits only for `scripts`。
@@ -103,25 +123,25 @@ For example if you want change to another gallery (react-bnb-gallery):
 # enter project root not ./client/
 cd project_root
 
-npm install --save-dev react-bnb-gallery
-
-# start api server
-npm run dev:server -- --folder=/path/to/photos
+pnpm install --save-dev react-bnb-gallery
 
 # start webpack devServer
-npm run dev:client
+pnpm dev:client
+
+# start api server
+pnpm dev:server -- --folder=/path/to/photos
 ```
 
 ## Publish 📦
 
 ```sh
-npm version patch / minor / major
+pnpm version patch / minor / major
 ```
 
 ## Run tests 🧪
 
 ```sh
-npm run test
+pnpm test
 ```
 
 ## Author 👤
@@ -149,8 +169,12 @@ Feel free to check [issues page](https://github.com/legend80s/gallery-server/iss
 - [x] Port customizable.
 - [x] Token customizable.
 - [x] Serve multiple folders in one cmd.
-- [x] Token can be optional when viewed on owner's brower.
+- [x] Token can be optional when viewed on owner's browser.
 - [ ] Electron App.
+- [ ] npm to pnpm.
+- [ ] React v16 -> Vite v7 + React v19.
+- [ ] Next.js.
+- [ ] FastAPI python.
 
 ## Show your support ⭐️
 
