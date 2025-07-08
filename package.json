@@ -1,0 +1,73 @@
+{
+  "name": "gallery-server",
+  "version": "2.0.0",
+  "description": "Beautiful and powerful yet simple local image viewer on your PC or mobile.",
+  "keywords": [
+    "beautiful",
+    "pc",
+    "mobile",
+    "local",
+    "image",
+    "viewer",
+    "gallery",
+    "server",
+    "local gallery",
+    "local image viewer",
+    "react"
+  ],
+  "main": "server/app.js",
+  "files": [
+    "client/build",
+    "server/",
+    "lib/"
+  ],
+  "type": "module",
+  "scripts": {
+    "// Vite scripts": "---",
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "-----Separator-Line-----": "-----Separator-Line-----",
+    "// app scripts": "---",
+    "dev:client": "cd client && cross-env NODE_OPTIONS=--openssl-legacy-provider npm run start",
+    "dev:server": "node server/app.js",
+    "// --- alias for dev:client": "---",
+    "dc": "npm run dev:client",
+    "// --- alias for dev:server": "---",
+    "ds": "node server/app.js",
+    "preversion": "npm test && npm run clean && npm run build:client",
+    "postversion": "npm publish && git push && git push --tags",
+    "clean": "rm -rf ./client/build/",
+    "build:client": "cd client && npm run build",
+    "test": "mocha"
+  },
+  "dependencies": {
+    "--- SERVER DEPENDENCIES ---": "---",
+    "address": "^1.1.2",
+    "boxen": "^4.1.0",
+    "commander": "^3.0.2",
+    "detect-port": "^1.3.0",
+    "image-size": "^0.8.3",
+    "is-image": "^3.0.0",
+    "is-video": "^1.0.1",
+    "koa": "^2.10.0",
+    "koa-static": "^5.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.30.1",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.6.0",
+    "eslint": "^9.30.1",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.3.0",
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.35.1",
+    "vite": "^7.0.3",
+    "--- CLIENT DEPENDENCIES ---": "---",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  }
+}
