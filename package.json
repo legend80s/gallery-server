@@ -21,7 +21,19 @@
     "server/",
     "lib/"
   ],
-  "type": "module",
+  "bin": {
+    "gallery-server": "server/app.js"
+  },
+  "author": "legend80s",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/legend80s/gallery-server"
+  },
+  "bugs": {
+    "url": "https://github.com/legend80s/gallery-server/issues"
+  },
+  "homepage": "https://github.com/legend80s/gallery-server#readme",
   "scripts": {
     "// Vite scripts": "---",
     "dev": "vite",
@@ -42,8 +54,8 @@
     "build:client": "cd client && npm run build",
     "test": "mocha"
   },
+  "--- SERVER DEPENDENCIES ---": "---",
   "dependencies": {
-    "--- SERVER DEPENDENCIES ---": "---",
     "address": "^1.1.2",
     "boxen": "^4.1.0",
     "commander": "^3.0.2",
@@ -54,6 +66,7 @@
     "koa": "^2.10.0",
     "koa-static": "^5.0.0"
   },
+  "--- CLIENT DEPENDENCIES ---": "---",
   "devDependencies": {
     "@eslint/js": "^9.30.1",
     "@types/react": "^19.1.8",
@@ -66,7 +79,6 @@
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1",
     "vite": "^7.0.3",
-    "--- CLIENT DEPENDENCIES ---": "---",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   }
