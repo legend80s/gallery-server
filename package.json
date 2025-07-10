@@ -44,7 +44,7 @@
     "react-toggle": "^4.1.1"
   },
   "scripts": {
-    "dev:client": "cd client && cross-env NODE_OPTIONS=--openssl-legacy-provider npm run start",
+    "dev:client": "cd client && npm run start",
     "dev:server": "node server/app.js",
     "// --- alias for dev:client": "---",
     "dc": "npm run dev:client",

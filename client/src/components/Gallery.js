@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 // https://github.com/jossmac/react-images
 import Carousel, { Modal, ModalGateway } from 'react-images';
-import PhotoWall from "react-photo-gallery";
+import PhotoWall from 'react-photo-gallery';
 
-import fetch from '../utils/fetch'
+import fetch from '../utils/fetch';
 import token from '../utils/token';
 // import { showDemoPhotos } from './gallery-from-demo-api';
 
@@ -22,26 +22,39 @@ export function Gallery({ theme, direction }) {
     // showDemoPhotos(setPhotos);
   }, []);
 
-  // console.log('photos:', photos, 'selectedIndex', selectedIndex, 'modalIsOpen', modalIsOpen);
+  // console.log(
+  //   'photos2:',
+  //   photos,
+  //   'selectedIndex',
+  //   selectedIndex,
+  //   'modalIsOpen',
+  //   modalIsOpen
+  // );
 
   const toggleModal = (index) => {
     setSelectedIndex(index);
     setModalIsOpen(!modalIsOpen);
   };
 
-  return (<div className={'gallery ' + theme}>
-    {modalIsOpen && <ModalGateway>
-        <Modal onClose={() => setModalIsOpen(!modalIsOpen)}>
-          <Carousel views={photos} currentIndex={selectedIndex} />
-        </Modal>
-    </ModalGateway>}
+  return (
+    <div className={'gallery ' + theme}>
+      {modalIsOpen && (
+        <ModalGateway>
+          <Modal onClose={() => setModalIsOpen(!modalIsOpen)}>
+            <Carousel views={photos} currentIndex={selectedIndex} />
+          </Modal>
+        </ModalGateway>
+      )}
 
-    {photos.length ? <PhotoWall
-      photos={photos}
-      direction={direction}
-      onClick={(_, { index }) => toggleModal(index)}
-    /> : null}
-  </div>);
+      {photos.length ? (
+        <PhotoWall
+          photos={photos}
+          direction={direction}
+          onClick={(_, { index }) => toggleModal(index)}
+        />
+      ) : null}
+    </div>
+  );
 }
 
 /**
@@ -61,16 +74,18 @@ export async function fetchPhotos(path) {
 
 function showPhotos(setPhotos) {
   const path = '/api/images';
-  fetchPhotos(path).then(photos => {
-    // console.log('urls:', urls);
+  fetchPhotos(path).then((photos) => {
+    console.log('photos1:', photos);
 
-    setPhotos(photos.map(photo => {
-      const { src } = photo;
+    setPhotos(
+      photos.map((photo) => {
+        const { src } = photo;
 
-      return {
-        ...photo,
-        src: src + (src.includes('?') ? '&' : '?') + `token=${token}`,
-      };
-    }));
+        return {
+          ...photo,
+          src: src + (src.includes('?') ? '&' : '?') + `token=${token}`,
+        };
+      })
+    );
   });
 }
