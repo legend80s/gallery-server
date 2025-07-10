@@ -1,22 +1,20 @@
 // https://github.com/jossmac/react-images
-import { useState, useEffect } from 'react';
 import PhotoWall from 'react-photo-gallery';
+import { useState, useEffect } from 'react';
 import Carousel, { Modal, ModalGateway } from 'react-images';
 
 import fetch from '../utils/fetch';
 import getURLToken from '../utils/token';
 // import { showDemoPhotos } from './gallery-from-demo-api';
 
+import type { IPhotosResp } from '../../../lib/request.types';
+
 import './Gallery.css';
 
 export const THEME_LIGHT = 'light';
 export const THEME_DARK = 'dark';
 
-/**
- * @typedef {import('../../../lib/request.typings').IPhotosResp} IPhotosResp
- */
-
-export function Gallery({ theme, direction }) {
+export function Gallery({ theme }) {
   const [photos, setPhotos] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -40,8 +38,8 @@ export function Gallery({ theme, direction }) {
   //   modalIsOpen
   // );
 
-  const toggleModal = (index) => {
-    console.log('index:', index);
+  const toggleModal = (index: number) => {
+    // console.log('index:', index);
     setSelectedIndex(index);
     setModalIsOpen(!modalIsOpen);
   };
@@ -49,6 +47,7 @@ export function Gallery({ theme, direction }) {
   return (
     <div className={`gallery ${theme}`}>
       {modalIsOpen && (
+        // @ts-expect-error it works
         <ModalGateway>
           <Modal onClose={() => setModalIsOpen(!modalIsOpen)}>
             <Carousel views={photos} currentIndex={selectedIndex} />
@@ -74,7 +73,7 @@ export function Gallery({ theme, direction }) {
  * @param {string} path
  * @returns {Promise<IPhotosResp>}
  */
-export async function fetchPhotos(path) {
+export async function fetchPhotos(path: string): Promise<IPhotosResp> {
   try {
     return await fetch(path);
   } catch (error) {
