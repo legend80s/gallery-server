@@ -3,24 +3,21 @@
 // ! 注意这个文件不能改成 ts，因为需要被 node.js 运行，目前 node.js v22 并不支持 node_modules 内的 ts。
 const Koa = require('koa');
 const serve = require('koa-static');
-const path = require('path');
-const fs = require('fs');
-const isImage = require('is-image');
-const isVideo = require('is-video');
+const path = require('node:path');
+const fs = require('node:fs');
 const address = require('address');
 const boxen = require('boxen');
 const detect = require('detect-port');
 const program = require('commander');
-const { promisify } = require('util');
-// @ts-expect-error
-const sizeOf = promisify(require('image-size'));
 
 const { version, description, name, repository } = require('../package.json');
 const { DEFAULT_PORT } = require('../lib/constants');
 const { privatize } = require('./middlewares/privacy');
 const { genToken } = require('./utils/token');
 const isIntegerString = require('./utils/is-integer-string');
-const { extractName } = require('../server/utils/file');
+const { getPhotos } = require('./api/photos');
+const { getVideos } = require('./api/videos');
+const { gen404 } = require('./api/404');
 
 const app = new Koa();
 
@@ -82,9 +79,9 @@ if (!validateFolder(mediaFolder)) {
   process.exit(1);
 }
 
-const buildFolder = path.resolve(__dirname, '../client/build');
+const buildFolder = path.resolve(__dirname, '../client/dist');
 
-// console.log('serve index folder:', path.resolve(__dirname, '../client/build'));
+// console.log('serve index folder:', path.resolve(__dirname, '../client/dist'));
 
 const token = tokenFromCli || genToken();
 
@@ -117,15 +114,13 @@ app.use(async (ctx) => {
     }
 
     if (ctx.path === '/api/images') {
-      const photos = getRelativeFiles(mediaFolder, isImage);
-
-      return sendPhotos(ctx, photos);
+      ctx.body = await getPhotos(mediaFolder);
+      return;
     }
 
     if (ctx.path === '/api/videos') {
-      const videos = getRelativeFiles(mediaFolder, isVideo);
-
-      return sendVideos(ctx, videos);
+      ctx.body = await getVideos(mediaFolder);
+      return;
     }
 
     if (ctx.path === '/api/view') {
@@ -137,84 +132,9 @@ app.use(async (ctx) => {
   warn(
     `API (${ctx.method} ${ctx.path}) not implemented. Make sure \`client:dev\` has been run.`
   );
-  // 404
-  ctx.body = `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Document</title>
-    </head>
-    <body style="text-align: center;">
-      <h1>404 Not Found</h1>
-      <h2><code>${ctx.method} ${ctx.path}</code></h2>
-    </body>
-    </html>
-  `;
+
+  ctx.body = gen404(ctx);
 });
-
-/** @typedef {import('../lib/request.types').IPhotosResp} IPhotosResp */
-/** @typedef {import('../lib/request.types').IRespVideo} IVideoResp */
-
-/**
- *
- * @param {any} ctx
- * @param {string[]} photoPaths
- */
-async function sendPhotos(ctx, photoPaths) {
-  /** @type {IPhotosResp} */
-  const photos = await Promise.all(
-    photoPaths.map(async (src) => {
-      let dimensions = { width: 1, height: 1, orientation: 1 };
-
-      try {
-        dimensions = await sizeOf(mediaFolder + '/' + src);
-      } catch (error) {
-        console.error(error);
-      }
-      const { width, height, orientation } = dimensions;
-      const isVertical = orientation === 6;
-
-      return {
-        ...normalizePath(src, { prefix: '/photos/' }),
-        width: isVertical ? height : width,
-        height: isVertical ? width : height,
-      };
-    })
-  );
-
-  // console.log('photos:', photos.slice(0, 3));
-
-  ctx.body = photos;
-}
-
-/**
- *
- * @param {any} ctx
- * @param {string[]} videoPaths
- */
-function sendVideos(ctx, videoPaths) {
-  /** @type {IVideoResp[]} */
-  const videos = videoPaths.map((path) =>
-    normalizePath(path, { prefix: '/videos/' })
-  );
-
-  ctx.body = videos;
-}
-
-/**
- *
- * @param {string} path
- * @param {{ prefix: string }} opts
- * @returns
- */
-function normalizePath(path, { prefix }) {
-  return {
-    caption: extractName(path),
-    src: `${prefix}${path.replace(/ /g, '%20').replace(/#/g, '%23')}`,
-  };
-}
 
 function sendViewInfo(ctx) {
   ctx.body = {
@@ -267,43 +187,6 @@ async function choosePort(port) {
   }
 
   return availablePort;
-}
-
-function getRelativeFiles(folder, predicate) {
-  return findAllFiles(folder, predicate).map((filePath) =>
-    path.relative(folder, filePath)
-  );
-}
-
-/**
- * Find all the files in the target folder recursively.
- * @param {string} folder directory
- * @param {(path: string) => boolean} predicate directory ignored
- * @param {string} excludedFolder directory ignored
- * @returns {string[]} file paths
- */
-function findAllFiles(
-  folder,
-  predicate = () => true,
-  excludedFolder = 'node_modules'
-) {
-  return fs.readdirSync(folder).reduce((acc, cur) => {
-    // console.log('folder', folder, 'cur:', cur);
-
-    if (folder.endsWith(`/${excludedFolder}`)) {
-      return acc;
-    }
-
-    const filePath = path.join(folder, cur);
-
-    if (fs.statSync(filePath).isDirectory()) {
-      acc.push(...findAllFiles(filePath, predicate));
-    } else {
-      predicate(filePath) && acc.push(filePath);
-    }
-
-    return acc;
-  }, []);
 }
 
 /**
