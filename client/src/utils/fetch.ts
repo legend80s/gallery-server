@@ -1,6 +1,6 @@
 import getURLToken from './token';
 
-export default async function fetch(api) {
+export default async function fetch(api: string) {
   const token = getURLToken();
 
   const resp = await window.fetch(!token ? api : `${api}?token=${token}`);

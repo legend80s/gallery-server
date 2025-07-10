@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // @ts-check
+// ! 注意这个文件不能改成 ts，因为需要被 node.js 运行，目前 node.js v22 并不支持 node_modules 内的 ts。
 const Koa = require('koa');
 const serve = require('koa-static');
 const path = require('path');
@@ -11,6 +12,7 @@ const boxen = require('boxen');
 const detect = require('detect-port');
 const program = require('commander');
 const { promisify } = require('util');
+// @ts-expect-error
 const sizeOf = promisify(require('image-size'));
 
 const { version, description, name, repository } = require('../package.json');
@@ -152,6 +154,9 @@ app.use(async (ctx) => {
   `;
 });
 
+/** @typedef {import('../lib/request.types').IPhotosResp} IPhotosResp */
+/** @typedef {import('../lib/request.types').IRespVideo} IVideoResp */
+
 /**
  *
  * @param {any} ctx
@@ -190,6 +195,7 @@ async function sendPhotos(ctx, photoPaths) {
  * @param {string[]} videoPaths
  */
 function sendVideos(ctx, videoPaths) {
+  /** @type {IVideoResp[]} */
   const videos = videoPaths.map((path) =>
     normalizePath(path, { prefix: '/videos/' })
   );
@@ -261,16 +267,6 @@ async function choosePort(port) {
   }
 
   return availablePort;
-}
-
-/**
- *
- * @param {string} prefix
- * @param {string[]} arr
- * @returns {string[]}
- */
-function addPrefix(prefix, arr) {
-  return arr.map((str) => `${prefix}${str}`);
 }
 
 function getRelativeFiles(folder, predicate) {

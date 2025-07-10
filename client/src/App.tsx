@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 // @ts-expect-error no declaration file
 import Toggle from 'react-toggle';
 import {
@@ -18,8 +18,16 @@ function App() {
   const [direction, setDirection] = useState<IDirection>('row');
   const [theme, setTheme] = useState(THEME_LIGHT);
 
+  // TODO: move to a separate hook file
   useEffect(() => {
-    setViewOptions(setShowFooter, setDirection);
+    queryViewOptions().then((opts) => {
+      if (!opts) return;
+
+      const { isFooterVisible, direction } = opts;
+      if (typeof isFooterVisible === 'boolean') setShowFooter(isFooterVisible);
+
+      setDirection(direction);
+    });
   }, []);
 
   const toggleTheme = () => {
@@ -67,17 +75,23 @@ function App() {
 
 export default App;
 
-/**
- * @returns {Promise<void>}
- */
-async function setViewOptions(setFooterVisible, setDirection) {
+type IQueryViewOptions = {
+  isFooterVisible: boolean;
+  direction: IDirection;
+};
+
+async function queryViewOptions(): Promise<IQueryViewOptions | undefined> {
   try {
     const { isFooterVisible, isColumnLayout } = await fetch('/api/view');
     const direction = isColumnLayout ? 'column' : 'row';
 
-    typeof isFooterVisible === 'boolean' && setFooterVisible(isFooterVisible);
-    typeof isColumnLayout === 'boolean' && setDirection(direction);
+    return {
+      isFooterVisible,
+      direction,
+    };
   } catch (error) {
-    return console.error('fetchImages', error);
+    console.error('fetchImages', error);
+
+    return undefined;
   }
 }

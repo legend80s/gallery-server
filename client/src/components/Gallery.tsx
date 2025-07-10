@@ -24,7 +24,7 @@ export function Gallery({
   theme: ITheme;
   direction: IDirection;
 }) {
-  const [photos, setPhotos] = useState([]);
+  const [photos, setPhotos] = useState<IUIPhoto[]>([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -92,11 +92,13 @@ export async function fetchPhotos(path: string): Promise<IPhotosResp> {
   }
 }
 
-/**
- *
- * @returns {Promise<IPhotosResp>}
- */
-async function showPhotos() {
+type IPhoto = IPhotosResp[number];
+
+type IUIPhoto = IPhoto & {
+  source: string;
+};
+
+async function showPhotos(): Promise<IUIPhoto[]> {
   const path = '/api/images';
 
   return fetchPhotos(path).then((photos) => {
@@ -108,7 +110,7 @@ async function showPhotos() {
 
       return {
         ...photo,
-        src: `${src + (src.includes('?') ? '&' : '?')}token=${token}`,
+        source: `${src + (src.includes('?') ? '&' : '?')}token=${token}`,
       };
     });
 
