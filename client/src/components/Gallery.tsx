@@ -11,10 +11,19 @@ import type { IPhotosResp } from '../../../lib/request.types';
 
 import './Gallery.css';
 
-export const THEME_LIGHT = 'light';
-export const THEME_DARK = 'dark';
+export type ITheme = 'light' | 'dark';
+export type IDirection = 'row' | 'column';
 
-export function Gallery({ theme }) {
+export const THEME_LIGHT: ITheme = 'light';
+export const THEME_DARK: ITheme = 'dark';
+
+export function Gallery({
+  theme,
+  direction,
+}: {
+  theme: ITheme;
+  direction: IDirection;
+}) {
   const [photos, setPhotos] = useState([]);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -60,7 +69,7 @@ export function Gallery({ theme }) {
           photos={photos}
           onClick={(_, { index }) => toggleModal(index)}
           margin={2}
-          direction='row'
+          direction={direction}
           targetRowHeight={300}
         />
       ) : null}
