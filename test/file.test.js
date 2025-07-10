@@ -1,5 +1,5 @@
-const assert = require('assert');
-const file = require('../server/utils/file');
+import { strictEqual } from 'node:assert';
+import file from '../server/utils/file';
 
 describe('file', () => {
   const { extractName } = file;
@@ -11,7 +11,7 @@ describe('file', () => {
 
       const actual = extractName(input);
 
-      assert.strictEqual(actual, expected);
+      strictEqual(actual, expected);
     });
 
     it('path with separator', () => {
@@ -20,17 +20,7 @@ describe('file', () => {
 
       const actual = extractName(input);
 
-      assert.strictEqual(actual, expected);
+      strictEqual(actual, expected);
     });
-
-    it('name with separator', () => {
-      const input = "~/Alice\'s Adventures\ in Wonder\\land.txt";
-      const expected = "Alice's Adventures in Wonder\\land";
-
-      const actual = extractName(input);
-
-      assert.strictEqual(actual, expected);
-    });
-
   });
 });

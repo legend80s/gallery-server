@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-
+// @ts-check
 const Koa = require('koa');
 const serve = require('koa-static');
 const path = require('path');
@@ -131,14 +131,34 @@ app.use(async (ctx) => {
     }
   }
 
-  // file or path not found in build or api will be redirected to github repo
+  // 404 - file or path not found in build or api
   warn(
-    `Path not implemented redirect to github repo (${REPO}). Make sure \`client:dev\` has been run.`
+    `API (${ctx.method} ${ctx.path}) not implemented. Make sure \`client:dev\` has been run.`
   );
-  ctx.redirect(REPO);
+  // 404
+  ctx.body = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Document</title>
+    </head>
+    <body style="text-align: center;">
+      <h1>404 Not Found</h1>
+      <h2><code>${ctx.method} ${ctx.path}</code></h2>
+    </body>
+    </html>
+  `;
 });
 
+/**
+ *
+ * @param {any} ctx
+ * @param {string[]} photoPaths
+ */
 async function sendPhotos(ctx, photoPaths) {
+  /** @type {IPhotosResp} */
   const photos = await Promise.all(
     photoPaths.map(async (src) => {
       let dimensions = { width: 1, height: 1, orientation: 1 };
@@ -152,12 +172,14 @@ async function sendPhotos(ctx, photoPaths) {
       const isVertical = orientation === 6;
 
       return {
-        ...normalizePath(src),
+        ...normalizePath(src, { prefix: '/photos/' }),
         width: isVertical ? height : width,
         height: isVertical ? width : height,
       };
     })
   );
+
+  // console.log('photos:', photos.slice(0, 3));
 
   ctx.body = photos;
 }
@@ -168,15 +190,23 @@ async function sendPhotos(ctx, photoPaths) {
  * @param {string[]} videoPaths
  */
 function sendVideos(ctx, videoPaths) {
-  const videos = videoPaths.map(normalizePath);
+  const videos = videoPaths.map((path) =>
+    normalizePath(path, { prefix: '/videos/' })
+  );
 
   ctx.body = videos;
 }
 
-function normalizePath(path) {
+/**
+ *
+ * @param {string} path
+ * @param {{ prefix: string }} opts
+ * @returns
+ */
+function normalizePath(path, { prefix }) {
   return {
     caption: extractName(path),
-    src: `/${path.replace(/ /g, '%20').replace(/#/g, '%23')}`,
+    src: `${prefix}${path.replace(/ /g, '%20').replace(/#/g, '%23')}`,
   };
 }
 
@@ -231,6 +261,16 @@ async function choosePort(port) {
   }
 
   return availablePort;
+}
+
+/**
+ *
+ * @param {string} prefix
+ * @param {string[]} arr
+ * @returns {string[]}
+ */
+function addPrefix(prefix, arr) {
+  return arr.map((str) => `${prefix}${str}`);
 }
 
 function getRelativeFiles(folder, predicate) {

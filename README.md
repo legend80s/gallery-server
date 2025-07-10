@@ -77,9 +77,9 @@ npx gallery-server -h
 
 - It is both a server and a client application, as well as a command-line application!
 - Tech stack:
-  - pnpm v9, Node.js v22, Vite v7q
+  - pnpm v9, Node.js v22 (builtin `--watch` 🎉), Vite v7
   - ESLint v9, Prettier, Bun v1.2 (for test),
-  - React.js v19, TypeScript v5, Koa v2.
+  - TypeScript v5, Koa v2.
 
 ## FAQ 🙋‍♂️
 
@@ -175,9 +175,12 @@ Feel free to check [issues page](https://github.com/legend80s/gallery-server/iss
 - [x] Token can be optional when viewed on owner's browser.
 - [ ] Electron App.
 - [x] npm to pnpm.
-- [ ] Koa v2 to v3.
-- [ ] React v16 -> Vite v7 + React v19.
+- [x] Node.js v16 to v22 (LTS 2025-7-10).
+- [ ] ~~Koa v2 to v3.~~ No migration because nothing big changed.
+- [x] React v16 -> Vite v7 + ~~React v19~~. No migration to React.js v19 because react-images and react-photo-gallery are not v19 supported and not maintained.
+- [ ] Show thumbnail for first render performance.
 - [ ] Next.js.
+- [ ] TRPC - share backend request typings with client.
 - [ ] FastAPI python.
 
 ## Show your support ⭐️

@@ -1,0 +1,7 @@
+[test]
+preload = ["./test/happydom.ts"]
+# preload = ["./test/happydom.ts", "./test/testing-library.ts"]
+coverageSkipTestFiles = true       # default false
+
+# 只能暂时注释否则 ci 失败，因为其覆盖率阈值是文件级别的。bun v1.2.15 https://github.com/oven-sh/bun/issues/17028
+# coverageThreshold = { functions = 0.58, lines = 0.70 }

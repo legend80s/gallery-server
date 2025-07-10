@@ -1,0 +1,11 @@
+{
+  "description": "client code for gallery-server",
+  "private": true,
+  "proxy": "http://localhost:6834/",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  }
+}

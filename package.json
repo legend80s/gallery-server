@@ -35,24 +35,19 @@
   },
   "homepage": "https://github.com/legend80s/gallery-server#readme",
   "scripts": {
-    "// Vite scripts": "---",
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
     "-----Separator-Line-----": "-----Separator-Line-----",
     "// app scripts": "---",
-    "dev:client": "cd client && cross-env NODE_OPTIONS=--openssl-legacy-provider npm run start",
-    "dev:server": "node server/app.js",
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "node --watch server/app.js",
     "// --- alias for dev:client": "---",
     "dc": "npm run dev:client",
     "// --- alias for dev:server": "---",
-    "ds": "node server/app.js",
+    "ds": "node --watch server/app.js",
     "preversion": "npm test && npm run clean && npm run build:client",
     "postversion": "npm publish && git push && git push --tags",
     "clean": "rm -rf ./client/build/",
     "build:client": "cd client && npm run build",
-    "test": "mocha"
+    "test": "bun test"
   },
   "--- SERVER DEPENDENCIES ---": "---",
   "dependencies": {
@@ -69,6 +64,7 @@
   "--- CLIENT DEPENDENCIES ---": "---",
   "devDependencies": {
     "@eslint/js": "^9.30.1",
+    "@happy-dom/global-registrator": "^18.0.1",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.6.0",
@@ -76,10 +72,13 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^16.3.0",
+    "react": "16",
+    "react-dom": "16",
+    "react-images": "^1.2.0-beta.7",
+    "react-photo-gallery": "^8.0.0",
+    "react-toggle": "^4.1.1",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1",
-    "vite": "^7.0.3",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "vite": "^7.0.3"
   }
 }
