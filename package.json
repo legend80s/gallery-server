@@ -44,12 +44,17 @@
     "react-toggle": "^4.1.1"
   },
   "scripts": {
+    "// --- Development": "---",
     "dev:client": "cd client && npm run start",
     "dev:server": "node server/app.js",
     "// --- alias for dev:client": "---",
     "dc": "npm run dev:client",
     "// --- alias for dev:server": "---",
     "ds": "node server/app.js",
+    "// --- Publish": "---",
+    "pub:patch": "npm version patch",
+    "pub:minor": "npm version minor",
+    "pub:major": "npm version major",
     "preversion": "npm test && npm run clean && npm run build:client",
     "postversion": "npm publish && git push && git push --tags",
     "clean": "rm -rf ./client/build/",
