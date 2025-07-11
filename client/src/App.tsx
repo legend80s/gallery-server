@@ -7,7 +7,7 @@ import {
   THEME_DARK,
   type IDirection,
 } from './components/Gallery';
-import fetch from './utils/fetch';
+import { get } from './utils/fetch';
 
 import './App.css';
 import 'react-toggle/style.css';
@@ -35,40 +35,43 @@ function App() {
   };
 
   return (
-    <div className='App'>
+    <div className="App">
       <main className={`main ${theme}`}>
         <Gallery theme={theme} direction={direction} />
         <CinemaHall theme={theme} />
       </main>
 
-      {isFooterVisible && (
-        <footer className='App-footer'>
-          <div className='toggle-wrapper'>
-            <span>Theme</span>
+      <footer className="App-footer">
+        <div className="toggle-wrapper">
+          <span>Theme</span>
 
-            <Toggle
-              className='toggle'
-              defaultChecked={false}
-              icons={false}
-              onChange={toggleTheme}
-            />
+          <Toggle
+            className="toggle"
+            defaultChecked={false}
+            icons={false}
+            onChange={toggleTheme}
+          />
+        </div>
+        {isFooterVisible && (
+          <div>
+            <span className="tips" style={{ marginInlineEnd: '1em' }}>
+              Powered by @gallery-server
+            </span>
+            <a
+              className="App-link"
+              href="https://github.com/legend80s/gallery-server"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Give a{' '}
+              <span role="img" aria-label="github star">
+                ⭐️
+              </span>{' '}
+              if this project helped you!
+            </a>
           </div>
-
-          <p className='tips'>Powered by @gallery-server</p>
-          <a
-            className='App-link'
-            href='https://github.com/legend80s/gallery-server'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Give a{' '}
-            <span role='img' aria-label='github star'>
-              ⭐️
-            </span>{' '}
-            if this project helped you!
-          </a>
-        </footer>
-      )}
+        )}
+      </footer>
     </div>
   );
 }
@@ -82,7 +85,7 @@ type IQueryViewOptions = {
 
 async function queryViewOptions(): Promise<IQueryViewOptions | undefined> {
   try {
-    const { isFooterVisible, isColumnLayout } = await fetch('/api/view');
+    const { isFooterVisible, isColumnLayout } = await get('/api/view');
     const direction = isColumnLayout ? 'column' : 'row';
 
     return {

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import getURLToken from '../utils/token';
-import fetch from '../utils/fetch';
+import { get } from '../utils/fetch';
 
 import './CinemaHall.css';
 import type { ITheme } from './Gallery';
@@ -36,7 +36,7 @@ async function showVideos(): Promise<IRespVideo[]> {
   const path = '/api/videos';
 
   try {
-    const videos = await fetch(path);
+    const videos = await get(path);
 
     return (videos as IRespVideo[]).map(({ src, ...rest }) => {
       src = tryTrimPrefix(src, VIDEOS_API_PREFIX);

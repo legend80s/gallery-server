@@ -37,7 +37,7 @@ No installment required!
 1. Serve the local photos.
 
 ```sh
-bunx gallery-server --folder /path/to/photos
+bunx gallery-server --folder /path/to/photos --no-footer
 ```
 
 or:
@@ -45,9 +45,12 @@ or:
 ```sh
 pnpx gallery-server --folder /path/to/photos
 npx gallery-server --folder /path/to/photos
+```
 
-# for more usage
-npx gallery-server -h
+For more usage:
+
+```sh
+bunx gallery-server -h
 ```
 
 2. Open <http://localhost:xxxx/> in your favorite browser or share with your friends <http://a.b.c.d:xxxx?token=${token}>.
@@ -184,6 +187,7 @@ Feel free to check [issues page](https://github.com/legend80s/gallery-server/iss
 - [ ] Next.js.
 - [ ] TRPC - share backend request typings with client.
 - [ ] FastAPI python.
+- [ ] Save UI state (theme) to server using sqlite.
 
 ## Show your support ⭐️
 
