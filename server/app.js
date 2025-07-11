@@ -4,80 +4,30 @@
 const Koa = require('koa');
 const serve = require('koa-static');
 const path = require('node:path');
-const fs = require('node:fs');
 const address = require('address');
-const boxen = require('boxen');
 const detect = require('detect-port');
-const program = require('commander');
 
-const { version, description, name, repository } = require('../package.json');
 const { DEFAULT_PORT } = require('../lib/constants');
 const { privatize } = require('./middlewares/privacy');
 const { genToken } = require('./utils/token');
-const isIntegerString = require('./utils/is-integer-string');
 const { getPhotos } = require('./api/photos');
 const { getVideos } = require('./api/videos');
 const { gen404 } = require('./api/404');
 
-const app = new Koa();
-
-const YELLOW = '\x1b[1;33m';
-const RED = '\x1b[0;31m';
-const GREEN = '\x1b[0;32m';
-const UNDERLINED = '\x1b[4m';
-const BOLD = '\x1b[1m';
-const ITALIC = '\x1b[3m';
-// End Of Style
-const EOS = '\x1b[0m';
-
-const warn = (...args) => console.warn(`${YELLOW}[WARN]`, ...args, EOS);
+const { args } = require('./program');
+const { warn } = require('./utils/logger.js');
+const { GREEN, UNDERLINED, EOS, BOLD } = require('./utils/colors.js');
+const {
+  tokenFromCli,
+  mediaFolder,
+  isColumnLayout,
+  isFooterVisible,
+  portFromCli,
+} = args;
 
 const ip = address.ip();
-const REPO = repository.url;
 
-console.info(
-  boxen(`${BOLD}${ITALIC}gallery-server@${version}\ngithub: ${REPO}${EOS}`, {
-    margin: 1,
-    padding: { top: 1, right: 1, bottom: 1, left: 1 },
-  })
-);
-
-program
-  .version(version, '-v, --version', 'output the version number')
-  .description(description)
-  .name(name)
-  .usage('-f <folder>')
-  .option('-f, --folder <folder>', 'photos folder to serve')
-  .option('-d, --directory <directory>', 'photos folder to serve')
-  .option('-c, --column', 'use column layout')
-  .option('-p, --port <port>', 'server port')
-  .option('-t, --token <token>', 'secret token to prevent eavesdropping')
-  .option('--no-footer', 'hide the footer bar');
-
-program.parse(process.argv);
-// console.log('program:', program);
-
-const {
-  folder,
-  directory,
-  column: isColumnLayout,
-  footer: isFooterVisible,
-  token: tokenFromCli,
-  port: portFromCli,
-} = program;
-
-if (portFromCli && !isIntegerString(portFromCli)) {
-  console.error(`${RED}port "${portFromCli}" not an integer.${EOS}`);
-
-  process.exit(1);
-}
-
-/** @type {string} */
-const mediaFolder = folder || directory;
-
-if (!validateFolder(mediaFolder)) {
-  process.exit(1);
-}
+const app = new Koa();
 
 const buildFolder = path.resolve(__dirname, '../client/dist');
 
@@ -130,7 +80,7 @@ app.use(async (ctx) => {
 
   // 404 - file or path not found in build or api
   warn(
-    `API (${ctx.method} ${ctx.path}) not implemented. Make sure \`client:dev\` has been run.`
+    `${ctx.method} ${ctx.path} not implemented. \`client:dev\` may not be running.`,
   );
 
   ctx.body = gen404(ctx);
@@ -152,21 +102,21 @@ choosePort(port)
     app.listen(availablePort, '0.0.0.0', () => {
       console.log(
         `Local images served from ${GREEN}${UNDERLINED}${mediaFolder}${EOS}.`,
-        `You can now enjoy the gallery in the browser.`
+        `You can now enjoy the gallery in the browser.`,
       );
       console.log();
       console.log(
         `  Secret token:         ${GREEN}${token}${EOS},`,
-        `${BOLD}ONLY SHARE WITH YOUR TRUSTED FRIENDS!${EOS}`
+        `${BOLD}ONLY SHARE WITH YOUR TRUSTED FRIENDS!${EOS}`,
       );
       console.log(
         '  PC:                   ' +
-          `${GREEN}${UNDERLINED}http://localhost:${availablePort}/${EOS}`
+          `${GREEN}${UNDERLINED}http://localhost:${availablePort}/${EOS}`,
       );
       ip &&
         console.log(
           '  Mobile and Shareable: ' +
-            `${GREEN}${UNDERLINED}http://${ip}:${availablePort}/?token=${token}${EOS}`
+            `${GREEN}${UNDERLINED}http://${ip}:${availablePort}/?token=${token}${EOS}`,
         );
       console.log();
     });
@@ -187,34 +137,4 @@ async function choosePort(port) {
   }
 
   return availablePort;
-}
-
-/**
- * validate folder from cli
- * @param {string} folder
- * @returns {boolean}
- */
-function validateFolder(folder) {
-  let stat;
-  const CMD_EXAMPLE = '`$ npx gallery-server --folder /path/to/images`';
-
-  try {
-    stat = fs.lstatSync(folder);
-  } catch (error) {
-    console.error(
-      `${RED}folder "${folder}" not exists. ${EOS}Right example: ${GREEN}${CMD_EXAMPLE}${EOS}\n`
-    );
-
-    return false;
-  }
-
-  if (stat && !stat.isDirectory()) {
-    console.error(
-      `${RED}"${folder}" not a directory. ${EOS}Right example: ${GREEN}${CMD_EXAMPLE}${EOS}\n`
-    );
-
-    return false;
-  }
-
-  return true;
 }

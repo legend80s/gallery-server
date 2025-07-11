@@ -1,6 +1,10 @@
 {
-	"[typescriptreact]": {
-		"editor.formatOnSave": true,
-		"editor.defaultFormatter": "biomejs.biome"
-	}
+  "[typescriptreact]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascript]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "biomejs.biome"
+  }
 }
