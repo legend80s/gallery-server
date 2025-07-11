@@ -24,8 +24,6 @@ function extractName(filePath) {
  * @returns
  */
 exports.normalizePath = function normalizePath(path, { prefix }) {
-  prefix = process.env.NODE_ENV === 'development' ? prefix : '/';
-
   return {
     caption: extractName(path),
     src: `${prefix}${path.replace(/ /g, '%20').replace(/#/g, '%23')}`,

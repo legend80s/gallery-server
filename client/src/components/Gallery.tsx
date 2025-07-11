@@ -8,8 +8,11 @@ import getURLToken from '../utils/token';
 // import { showDemoPhotos } from './gallery-from-demo-api';
 
 import type { IPhotosResp } from '../../../lib/request.types';
+import { PHOTOS_API_PREFIX } from '../../../lib/constants';
+// console.log('PHOTOS_API_PREFIX:', PHOTOS_API_PREFIX);
 
 import './Gallery.css';
+import { tryTrimPrefix } from '../utils/path';
 
 export type ITheme = 'light' | 'dark';
 export type IDirection = 'row' | 'column';
@@ -30,8 +33,8 @@ export function Gallery({
 
   // TODO: refactor into hooks
   useEffect(() => {
-    showPhotos().then((photosWithToken) => {
-      // console.log('photosWithToken:', JSON.stringify(photosWithToken));
+    queryPhotos().then((photosWithToken) => {
+      // console.log("photosWithToken:", JSON.stringify(photosWithToken));
       setPhotos(photosWithToken);
     });
 
@@ -39,12 +42,12 @@ export function Gallery({
   }, []);
 
   // console.log(
-  //   'photos2:',
+  //   "photos2:",
   //   photos,
-  //   'selectedIndex',
+  //   "selectedIndex",
   //   selectedIndex,
-  //   'modalIsOpen',
-  //   modalIsOpen
+  //   "modalIsOpen",
+  //   modalIsOpen,
   // );
 
   const toggleModal = (index: number) => {
@@ -95,10 +98,15 @@ export async function fetchPhotos(path: string): Promise<IPhotosResp> {
 type IPhoto = IPhotosResp[number];
 
 type IUIPhoto = IPhoto & {
-  source: string;
+  source: {
+    download: string;
+    fullscreen: string;
+    regular: string;
+    thumbnail: string;
+  };
 };
 
-async function showPhotos(): Promise<IUIPhoto[]> {
+async function queryPhotos(): Promise<IUIPhoto[]> {
   const path = '/api/images';
 
   return fetchPhotos(path).then((photos) => {
@@ -106,12 +114,24 @@ async function showPhotos(): Promise<IUIPhoto[]> {
     const token = getURLToken();
 
     const photosWithToken = photos.map((photo) => {
-      const { src } = photo;
+      const { src: srcRaw, ...rest } = photo;
 
-      return {
-        ...photo,
-        source: `${src + (src.includes('?') ? '&' : '?')}token=${token}`,
+      const src = tryTrimPrefix(srcRaw, PHOTOS_API_PREFIX);
+      const highQualitySrc = `${src + (src.includes('?') ? '&' : '?')}token=${token}`;
+      const thumbnail = highQualitySrc;
+
+      const result: IUIPhoto = {
+        ...rest,
+        src: highQualitySrc,
+        source: {
+          download: highQualitySrc,
+          fullscreen: highQualitySrc,
+          regular: highQualitySrc,
+          thumbnail: thumbnail,
+        },
       };
+
+      return result;
     });
 
     return photosWithToken;

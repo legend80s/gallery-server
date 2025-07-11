@@ -77,8 +77,9 @@ npx gallery-server -h
 
 - It is both a server and a client application, as well as a command-line application!
 - Tech stack:
-  - pnpm v9, Node.js v22 (builtin `--watch` 🎉), Vite v7
-  - ESLint v9, Prettier, Bun v1.2 (for test),
+  - pnpm v9, Node.js v22 (builtin `--watch` 🎉),
+  - ESLint v9, Biome v2 (for formatting instead of Prettier), Bun v1.2 (for test),
+  - Vite v7,
   - TypeScript v5, Koa v2.
 
 ## FAQ 🙋‍♂️

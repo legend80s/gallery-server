@@ -8,6 +8,7 @@ const size = require('image-size');
 const sizeOf = promisify(size);
 
 const { getRelativeFiles, normalizePath } = require('../utils/file.js');
+const { PHOTOS_API_PREFIX } = require('../../lib/constants.js');
 
 /**
  *
@@ -23,7 +24,7 @@ exports.getPhotos = async function getPhotos(mediaFolder) {
       let dimensions = { width: 1, height: 1, orientation: 1 };
 
       try {
-        dimensions = await sizeOf(mediaFolder + '/' + src);
+        dimensions = await sizeOf(`${mediaFolder}/${src}`);
       } catch (error) {
         console.error(error);
       }
@@ -31,14 +32,14 @@ exports.getPhotos = async function getPhotos(mediaFolder) {
       const isVertical = orientation === 6;
 
       return {
-        ...normalizePath(src, { prefix: '/photos/' }),
+        ...normalizePath(src, { prefix: PHOTOS_API_PREFIX }),
         width: isVertical ? height : width,
         height: isVertical ? width : height,
       };
     })
   );
 
-  console.log('photos:', photos.slice(0, 3));
+  // console.log('photos:', photos.slice(0, 3));
 
   return photos;
 };

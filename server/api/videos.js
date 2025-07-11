@@ -2,6 +2,7 @@
 import isVideo from 'is-video';
 
 import { getRelativeFiles, normalizePath } from '../utils/file.js';
+import { VIDEOS_API_PREFIX } from '../../lib/constants.js';
 
 /** @typedef {import('../../lib/request.types').IRespVideo} IRespVideo */
 
@@ -15,7 +16,7 @@ export function getVideos(mediaFolder) {
 
   /** @type {IRespVideo[]} */
   const videos = videoPaths.map((path) =>
-    normalizePath(path, { prefix: '/videos/' })
+    normalizePath(path, { prefix: VIDEOS_API_PREFIX })
   );
 
   return videos;
