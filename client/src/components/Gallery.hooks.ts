@@ -55,6 +55,9 @@ async function queryPhotos(): Promise<IUIPhoto[]> {
       const result: IUIPhoto = {
         ...rest,
         src: highQualitySrc,
+        // @ts-expect-error it works
+        loading: 'lazy',
+
         source: {
           download: highQualitySrc,
           fullscreen: highQualitySrc,

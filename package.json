@@ -34,6 +34,9 @@
     "url": "https://github.com/legend80s/gallery-server/issues"
   },
   "homepage": "https://github.com/legend80s/gallery-server#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
   "scripts": {
     "-----Separator-Line-----": "-----Separator-Line-----",
     "// app scripts": "---",

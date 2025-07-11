@@ -183,6 +183,7 @@ Feel free to check [issues page](https://github.com/legend80s/gallery-server/iss
 - [ ] ~~Koa v2 to v3.~~ No migration because nothing big changed.
 - [x] ~~React v16 → React v19~~. No migration to React.js v19 because react-images and react-photo-gallery are not v19 supported and not maintained.
 - [x] Webpack v4 → Vite v7: Performance gain build `26s` → `5s`.
+- [x] Lazy load for first render performance.
 - [ ] Show thumbnail for first render performance.
 - [ ] Next.js.
 - [ ] TRPC - share backend request typings with client.
