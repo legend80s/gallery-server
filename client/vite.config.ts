@@ -1,8 +1,12 @@
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
+// @ts-expect-error it is js file and cannot convert to ts
+import { DEFAULT_PORT } from '../shared/constants.js';
+
+// console.log('DEFAULT_PORT:', DEFAULT_PORT);
 
 // pnpm dev:server port
-const SERVER_PORT = 6834;
+const SERVER_PORT = DEFAULT_PORT;
 
 // https://vite.dev/config/
 export default defineConfig({

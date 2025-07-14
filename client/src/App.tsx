@@ -93,7 +93,7 @@ async function queryViewOptions(): Promise<IQueryViewOptions | undefined> {
       direction,
     };
   } catch (error) {
-    console.error('fetchImages', error);
+    console.error('queryViewOptions', error);
 
     return undefined;
   }

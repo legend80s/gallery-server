@@ -4,8 +4,8 @@ import { get } from '../utils/fetch';
 
 import './CinemaHall.css';
 import type { ITheme } from './Gallery';
-import type { IRespVideo } from '../../../lib/request.types';
-import { VIDEOS_API_PREFIX } from '../../../lib/constants';
+import type { IRespVideo } from '../../../shared/request.types';
+import { VIDEOS_API_PREFIX } from '../../../shared/constants';
 import { tryTrimPrefix } from '../utils/path';
 
 export function CinemaHall({ theme }: { theme: ITheme }) {

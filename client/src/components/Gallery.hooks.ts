@@ -4,9 +4,9 @@ import { get } from '../utils/fetch';
 import { tryTrimPrefix } from '../utils/path';
 import getURLToken from '../utils/token';
 
-import { PHOTOS_API_PREFIX } from '../../../lib/constants';
+import { PHOTOS_API_PREFIX } from '../../../shared/constants';
 
-import type { IPhotosResp } from '../../../lib/request.types';
+import type { IPhotosResp } from '../../../shared/request.types';
 
 type IPhoto = IPhotosResp[number];
 

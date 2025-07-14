@@ -15,14 +15,14 @@
     "local image viewer",
     "react"
   ],
-  "main": "server/app.js",
+  "main": "nestjs-server/dist/main.js",
   "files": [
-    "client/build",
-    "server/",
-    "lib/"
+    "client/dist",
+    "nestjs-server/dist",
+    "shared/"
   ],
   "bin": {
-    "gallery-server": "server/app.js"
+    "gallery-server": "nestjs-server/dist/main.js"
   },
   "author": "legend80s",
   "license": "ISC",
@@ -40,16 +40,17 @@
   "scripts": {
     "-----Separator-Line-----": "-----Separator-Line-----",
     "// app scripts": "---",
-    "dev:client": "cd client && npm run dev",
-    "dev:server": "node --watch server/app.js",
+    "dev:client": "cd client && pnpm dev",
+    "dev:server": "cd nestjs-server && pnpm start",
     "// --- alias for dev:client": "---",
-    "dc": "npm run dev:client",
+    "dc": "pnpm dev:client",
     "// --- alias for dev:server": "---",
-    "ds": "node --watch server/app.js",
-    "preversion": "npm test && npm run clean && npm run build:client",
+    "ds": "cd nestjs-server && pnpm start",
+    "preversion": "npm test && pnpm clean && pnpm build:client && pnpm build:server",
     "postversion": "npm publish && git push && git push --tags",
-    "clean": "rm -rf ./client/build/",
-    "build:client": "cd client && npm run build",
+    "clean": "rm -rf ./client/dist/",
+    "build:server": "cd nestjs-server && pnpm build",
+    "build:client": "cd client && pnpm build",
     "test": "bun test"
   },
   "--- SERVER DEPENDENCIES ---": "---",

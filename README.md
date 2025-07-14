@@ -111,8 +111,12 @@ pnpm i
 2. start api server
 
 ```sh
-pnpm dev:server --folder='/path/to/photos'
-# pnpm ds --folder='/path/to/photos'
+cd nestjs-server
+
+pnpm start -- --folder='E:\download-2024-5-8\配图'
+
+# or
+nest start -- --folder='E:\download-2024-5-8\配图'
 ```
 
 3. start webpack devServer
