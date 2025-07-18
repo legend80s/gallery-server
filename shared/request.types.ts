@@ -1,3 +1,6 @@
+export type ITheme = 'light' | 'dark';
+export type IDirection = 'row' | 'column';
+
 export type IRespPhoto = {
   width: number;
   height: number;

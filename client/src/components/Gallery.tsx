@@ -9,9 +9,7 @@ import { usePhotos } from './Gallery.hooks';
 // console.log('PHOTOS_API_PREFIX:', PHOTOS_API_PREFIX);
 
 import './Gallery.css';
-
-export type ITheme = 'light' | 'dark';
-export type IDirection = 'row' | 'column';
+import type { IDirection, ITheme } from '../../../shared/request.types';
 
 export const THEME_LIGHT: ITheme = 'light';
 export const THEME_DARK: ITheme = 'dark';
