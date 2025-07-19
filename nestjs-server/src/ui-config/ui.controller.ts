@@ -18,7 +18,7 @@ export class UIController {
   @Patch()
   @UsePipes(new ZodPipe(updateUIConfigSchema))
   updateTheme(@Body() updateUIConfigDto: UpdateUIConfigDto) {
-    console.log('updateUIConfigDto1111:', updateUIConfigDto);
+    console.log('updateUIConfigDto:', updateUIConfigDto);
     return this.service.updateTheme(updateUIConfigDto.theme);
   }
 }

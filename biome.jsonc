@@ -1,5 +1,19 @@
 {
   "$schema": "https://biomejs.dev/schemas/2.1.1/schema.json",
+
+  // https://dgithub.xyz/biomejs/biome/issues/4514#issuecomment-2902049067
+  "overrides": [
+    {
+      "includes": ["**/src/**/*.service.ts", "**/src/**/*.controller.ts"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useImportType": "off"
+          }
+        }
+      }
+    }
+  ],
   "vcs": {
     "enabled": false,
     "clientKind": "git",
