@@ -9,6 +9,7 @@ import { VideosModule } from './videos/videos.module';
 import { ClientAppModule } from './serve-static.module';
 import { UIModule } from './ui-config/ui.module';
 import { TransformInterceptor } from './common/interceptors/success.interceptor';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { TransformInterceptor } from './common/interceptors/success.interceptor'
     VideosModule,
     ClientAppModule,
     UIModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [
