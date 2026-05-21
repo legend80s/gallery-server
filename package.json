@@ -30,7 +30,8 @@
     "is-image": "^3.0.0",
     "is-video": "^1.0.1",
     "koa": "^2.10.0",
-    "koa-static": "^5.0.0"
+    "koa-static": "^5.0.0",
+    "qrcode-terminal": "^0.12.0"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
@@ -46,11 +47,11 @@
   "scripts": {
     "// --- Development": "---",
     "dev:client": "cd client && npm run start",
-    "dev:server": "node server/app.js",
+    "dev:server": "node --watch server/app.js || node server/app.js",
     "// --- alias for dev:client": "---",
     "dc": "npm run dev:client",
     "// --- alias for dev:server": "---",
-    "ds": "node server/app.js",
+    "ds": "node --watch server/app.js || node server/app.js",
     "// --- Publish": "---",
     "pub:patch": "npm version patch",
     "pub:minor": "npm version minor",
