@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+// @ts-check
 const Koa = require('koa');
 const serve = require('koa-static');
 const path = require('path');
@@ -10,7 +11,9 @@ const address = require('address');
 const boxen = require('boxen');
 const detect = require('detect-port');
 const program = require('commander');
+const qrcode = require('qrcode-terminal');
 const { promisify } = require('util');
+// @ts-expect-error
 const sizeOf = promisify(require('image-size'));
 
 const { version, description, name, repository } = require('../package.json');
@@ -31,6 +34,7 @@ const ITALIC = '\x1b[3m';
 // End Of Style
 const EOS = '\x1b[0m';
 
+// @ts-expect-error
 const warn = (...args) => console.warn(`${YELLOW}[WARN]`, ...args, EOS);
 
 const ip = address.ip();
@@ -53,7 +57,9 @@ program
   .option('-c, --column', 'use column layout')
   .option('-p, --port <port>', 'server port')
   .option('-t, --token <token>', 'secret token to prevent eavesdropping')
-  .option('--no-footer', 'hide the footer bar');
+  .option('--no-footer', 'hide the footer bar')
+  .option('--no-qr', 'hide the QR code on startup')
+  .option('--no-qr-color', 'disable color output in console');
 
 program.parse(process.argv);
 // console.log('program:', program);
@@ -63,6 +69,8 @@ const {
   directory,
   column: isColumnLayout,
   footer: isFooterVisible,
+  qr: isQrVisible,
+  qrColor: isQrColorful,
   token: tokenFromCli,
   port: portFromCli,
 } = program;
@@ -138,8 +146,10 @@ app.use(async (ctx) => {
   ctx.redirect(REPO);
 });
 
+// @ts-expect-error
 async function sendPhotos(ctx, photoPaths) {
   const photos = await Promise.all(
+    // @ts-expect-error
     photoPaths.map(async (src) => {
       let dimensions = { width: 1, height: 1, orientation: 1 };
 
@@ -173,6 +183,7 @@ function sendVideos(ctx, videoPaths) {
   ctx.body = videos;
 }
 
+// @ts-expect-error
 function normalizePath(path) {
   return {
     caption: extractName(path),
@@ -180,6 +191,7 @@ function normalizePath(path) {
   };
 }
 
+// @ts-expect-error
 function sendViewInfo(ctx) {
   ctx.body = {
     isColumnLayout,
@@ -207,11 +219,16 @@ choosePort(port)
         '  PC:                   ' +
           `${GREEN}${UNDERLINED}http://localhost:${availablePort}/${EOS}`
       );
-      ip &&
+
+      if (ip) {
+        const ipUrl = `http://${ip}:${availablePort}/?token=${token}`;
         console.log(
-          '  Mobile and Shareable: ' +
-            `${GREEN}${UNDERLINED}http://${ip}:${availablePort}/?token=${token}${EOS}`
+          `  Mobile and Shareable: ${GREEN}${UNDERLINED}${ipUrl}${EOS}`
         );
+
+        isQrVisible && printQrCode(ipUrl, { leftPadding: 27 });
+      }
+
       console.log();
     });
   })
@@ -219,6 +236,38 @@ choosePort(port)
     console.error('choosePort', error);
   });
 
+/**
+ *
+ * @param {string} url
+ * @param {{ center?: boolean, leftPadding?: number }} options
+ */
+function printQrCode(url, { center, leftPadding = 0 } = {}) {
+  qrcode.generate(`${url}`, { small: true }, (qrcodeStr) => {
+    isQrColorful ? console.log(GREEN) : console.log(BOLD);
+    const lines = qrcodeStr.split('\n');
+
+    // console.log(qrcodeStr);
+
+    if (center) {
+      const terminalWidth = getTerminalWidth();
+      // 获取二维码的最大宽度
+      const qrMaxWidth = Math.max(...lines.map((line) => line.length));
+      leftPadding = Math.max(0, Math.floor((terminalWidth - qrMaxWidth) / 2));
+    }
+
+    // 为每一行添加左侧 N 个空格
+    const paddedQRCode = lines
+      .map((line) => ' '.repeat(leftPadding) + line)
+      .join('\n');
+
+    console.log(paddedQRCode);
+
+    isQrColorful && console.log(EOS);
+  });
+}
+function getTerminalWidth() {
+  return process.stdout.columns || 80;
+}
 /**
  * @param {number} port
  */
@@ -233,6 +282,7 @@ async function choosePort(port) {
   return availablePort;
 }
 
+// @ts-expect-error
 function getRelativeFiles(folder, predicate) {
   return findAllFiles(folder, predicate).map((filePath) =>
     path.relative(folder, filePath)
@@ -261,9 +311,12 @@ function findAllFiles(
     const filePath = path.join(folder, cur);
 
     if (fs.statSync(filePath).isDirectory()) {
+      // @ts-expect-error
       acc.push(...findAllFiles(filePath, predicate));
     } else {
-      predicate(filePath) && acc.push(filePath);
+      predicate(filePath) &&
+        // @ts-expect-error
+        acc.push(filePath);
     }
 
     return acc;
@@ -281,7 +334,7 @@ function validateFolder(folder) {
 
   try {
     stat = fs.lstatSync(folder);
-  } catch (error) {
+  } catch (_error) {
     console.error(
       `${RED}folder "${folder}" not exists. ${EOS}Right example: ${GREEN}${CMD_EXAMPLE}${EOS}\n`
     );
