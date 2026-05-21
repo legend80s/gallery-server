@@ -47,11 +47,11 @@
   "scripts": {
     "// --- Development": "---",
     "dev:client": "cd client && npm run start",
-    "dev:server": "node --watch server/app.js || node server/app.js",
+    "dev:server": "bash scripts/dev-server.bash",
     "// --- alias for dev:client": "---",
     "dc": "npm run dev:client",
     "// --- alias for dev:server": "---",
-    "ds": "node --watch server/app.js || node server/app.js",
+    "ds": "bash scripts/dev-server.bash",
     "// --- Publish": "---",
     "pub:patch": "npm version patch",
     "pub:minor": "npm version minor",

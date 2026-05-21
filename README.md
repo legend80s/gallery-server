@@ -108,20 +108,20 @@ bunx gallery-server -h
 
 ## Develop 👨‍💻
 
-1. install
+1. Install
 
 ```sh
 pnpm i
 ```
 
-2. start api server
+2. Start API server
 
 ```sh
 pnpm dev:server --folder='/path/to/photos'
 # pnpm ds --folder='/path/to/photos'
 ```
 
-3. start webpack devServer
+3. Start client webpack devServer (only when to change the frontend)
 
 ```sh
 pnpm dev:client
