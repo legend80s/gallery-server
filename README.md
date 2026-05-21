@@ -24,7 +24,11 @@
 
 #### **<p align="center" style="color: #cb3837;">Beautiful Local Image Viewer</p>**
 
-> Beautiful and powerful yet simple local image viewer on your PC or mobile.
+> Beautiful and powerful yet simple local image/videos viewer on your PC or mobile.
+>
+> "Especially handy when you're offline or prefer not to use the internet — maybe for security or privacy reasons — and use your phone to view or download pictures or videos from your computer."
+>
+> It's a CLI, a server and a web application — all in one.
 
 [中文版文档](https://juejin.cn/post/6973163233008058405/)
 
@@ -37,7 +41,7 @@ No installment required!
 1. Serve the local photos.
 
 ```sh
-bunx gallery-server --folder /path/to/photos --no-footer
+bunx gallery-server --folder /path/to/photos
 ```
 
 or:
@@ -77,6 +81,8 @@ bunx gallery-server -h
 6. 📚 A lot of gallery features. Check it at [react-images](https://jossmac.github.io/react-images/#/accessibility).
 
 ### Technical features
+
+> Local image viewer. Serves photos/videos from a folder via Koa, with a React frontend.
 
 - It is both a server and a client application, as well as a command-line application!
 - Tech stack:
