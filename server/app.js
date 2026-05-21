@@ -221,12 +221,12 @@ choosePort(port)
       );
 
       if (ip) {
-        const ipUrl = `http://${ip}:${availablePort}/?token=${token}`;
+        const ipUrlWithToken = `http://${ip}:${availablePort}/?token=${token}`;
         console.log(
-          `  Mobile and Shareable: ${GREEN}${UNDERLINED}${ipUrl}${EOS}`
+          `  Mobile and Shareable: ${GREEN}${UNDERLINED}${ipUrlWithToken}${EOS}`
         );
 
-        isQrVisible && printQrCode(ipUrl, { leftPadding: 27 });
+        isQrVisible && printQrCode(ipUrlWithToken, { leftPadding: 27 });
       }
 
       console.log();
@@ -242,7 +242,7 @@ choosePort(port)
  * @param {{ center?: boolean, leftPadding?: number }} options
  */
 function printQrCode(url, { center, leftPadding = 0 } = {}) {
-  qrcode.generate(`${url}`, { small: true }, (qrcodeStr) => {
+  qrcode.generate(url, { small: true }, (qrcodeStr) => {
     isQrColorful ? console.log(GREEN) : console.log(BOLD);
     const lines = qrcodeStr.split('\n');
 
